@@ -15,6 +15,8 @@ const mkdir = require('safe-mkdir');
 const _ = require('lodash');
 const resolve = require('resolve');
 const KarmaServer = require('karma').Server;
+const tsify = require('tsify');
+const tsc = require('typescript');
 
 //------------------------------------------------------------------------------
 // Command line args for target, theme, and production.
@@ -82,6 +84,21 @@ function bundleApp(done) {
     });
 }
 
+function bundleAppTs(done) {
+  var files = glob.sync('./src/**/*.tsx');
+  const bundler = browserify({
+      entries: files,
+      extensions: ['.tsx', '.ts'],
+      debug: true,
+    })
+    .plugin(tsify, { typescript: tsc })
+    .transform(babelify.configure({ extensions: ['.ts', '.js'], presets: ['es2015', 'react'] }));
+
+  bundler.bundle()
+    .pipe(source('./app.js'))
+    .pipe(gulp.dest('./dist'));
+}
+
 //------------------------------------------------------------------------------
 // Create test files bundle
 //------------------------------------------------------------------------------
@@ -109,7 +126,7 @@ function bundleTest(done) {
 gulp.task('bundle', ['bundle-vendor', 'bundle-app']);
 
 gulp.task('bundle-app', function (done) {
-  bundleApp(done);
+  bundleAppTs(done);
 });
 gulp.task('bundle-vendor', function (done) {
   bundleVendor(done);
