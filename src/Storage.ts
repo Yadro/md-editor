@@ -9,6 +9,20 @@ export interface INoteItem {
     text: string;
 }
 
+export class Note {
+    id: number;
+    title = '';
+    text = '';
+
+    setTitle(title: string) {
+        this.title = title;
+    }
+
+    setText(text: string) {
+        this.text = text;
+    }
+}
+
 export class Storage {
     
     dispatchEvent: (o: any) => any;

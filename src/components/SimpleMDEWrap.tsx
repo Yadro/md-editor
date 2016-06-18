@@ -3,7 +3,12 @@
 import * as SimpleMDE from 'simplemde';
 import * as React from 'react';
 
-export class SimpleMDEWrap extends React.Component<any, any> {
+interface SimpleMDEWrapP {
+    value;
+    onChange: (text: string) => any;
+}
+
+export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,10 +26,10 @@ export class SimpleMDEWrap extends React.Component<any, any> {
         simplemde.codemirror.setValue(this.state.value);
         
         simplemde.codemirror.on("change", () => {
-            console.log(simplemde.value());
             this.setState({
                 value: simplemde.value()
-            })
+            });
+            this.props.onChange(simplemde.value());
         });
         
     }
