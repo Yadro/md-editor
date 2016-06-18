@@ -5,15 +5,18 @@ import * as React from 'react';
 
 interface SimpleMDEWrapP {
     value;
+    currentNote;
     onChange: (text: string) => any;
 }
 
 export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     simplemde;
     getChanges = false;
+    currentNote;
 
     constructor(props) {
         super(props);
+        this.currentNote = this.props.currentNote;
     }
 
     componentDidMount() {
@@ -39,6 +42,10 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.currentNote === this.currentNote) {
+            return;
+        }
+        this.currentNote = nextProps.currentNote;
         this.getChanges = true;
         this.simplemde.codemirror.setValue(nextProps.value);
     }

@@ -67,7 +67,11 @@ class App extends React.Component<any, any> {
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />
-                <SimpleMDEWrap value={noteInstance.text} onChange={this.onInputEditor}/>
+                <SimpleMDEWrap 
+                    value={noteInstance.text}
+                    onChange={this.onInputEditor}
+                    currentNote={this.state.currentNote}
+                />
             </div>
         )
     }
