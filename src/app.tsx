@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Comp from './components/compoent';
+import NoteList from './components/NoteList';
 import * as SimpleMDE from 'simplemde';
+
 
 class App extends React.Component<any, any> {
 
@@ -11,7 +12,7 @@ class App extends React.Component<any, any> {
         return (
             <div>
                 <h2>Hello</h2>
-                <Comp />
+                <NoteList />
             </div>
         )
     }
