@@ -201,6 +201,11 @@ gulp.task('styles', function (done) {
     });
 });
 
+gulp.task('indexhtml', function () {
+  gulp.src('./index.html')
+    .pipe(gulp.dest('./dist'));
+});
+
 gulp.task('test', ['bundle-test', 'dist'], function (done) {
   new KarmaServer({
     configFile: __dirname + '/karma.conf.js',
@@ -213,10 +218,10 @@ gulp.task('clean', function() {
     .pipe(clean({force: true}));
 });
 
-gulp.task('watch', [/*'bundle-app', 'content'*/], function () {
+gulp.task('watch', function () {
   gulp.watch(['./src/**/*.tsx', './src/**/*.ts', './src/**/*.js'], ['bundle-app']);
   gulp.watch('content/**/*.*', ['content']);
-  // gulp.watch(['./src/**/*.jsx', 'src/**/*.js', 'content/*', 'index.html', 'sass/**/*'], ['dist']);
+  gulp.watch('./index.html', ['indexhtml']);
 });
 
 gulp.task('default', ['dist']);
