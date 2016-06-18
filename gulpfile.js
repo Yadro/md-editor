@@ -214,7 +214,8 @@ gulp.task('clean', function() {
 });
 
 gulp.task('watch', [/*'bundle-app', 'content'*/], function () {
-  gulp.watch(['./src/**/*.tsx', './src/**/*.ts'], ['bundle-app', 'content']);
+  gulp.watch(['./src/**/*.tsx', './src/**/*.ts'], ['bundle-app']);
+  gulp.watch('content/**/*.*', ['content']);
   // gulp.watch(['./src/**/*.jsx', 'src/**/*.js', 'content/*', 'index.html', 'sass/**/*'], ['dist']);
 });
 
