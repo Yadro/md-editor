@@ -9,6 +9,8 @@ interface SimpleMDEWrapP {
 }
 
 export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
+    simplemde;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -18,24 +20,27 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
 
     componentDidMount() {
         console.log('componentDidMount');
-        let simplemde = new SimpleMDE({
+        this.simplemde = new SimpleMDE({
             element: document.getElementById("editor"),
             spellChecker: false,
             autoDownloadFontAwesome: false
         });
-        simplemde.codemirror.setValue(this.state.value);
-        
-        simplemde.codemirror.on("change", () => {
+        this.simplemde.codemirror.setValue(this.state.value);
+
+        this.simplemde.codemirror.on("change", () => {
             this.setState({
-                value: simplemde.value()
+                value: this.simplemde.value()
             });
-            this.props.onChange(simplemde.value());
+            this.props.onChange(this.simplemde.value());
         });
-        
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         return false;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.simplemde.codemirror.setValue(nextProps.value);
     }
     
     render() {

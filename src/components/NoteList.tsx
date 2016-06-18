@@ -15,18 +15,39 @@ var options = [
     {id: 6, text: 'Item Two'},
 ]
 
+interface NoteListP {
+    notes;
+    onSetNote: (id) => any;
+    onNewNote: (title: string) => any;
+}
 
-export default class NoteList extends React.Component<any, any> {
+export default class NoteList extends React.Component<NoteListP, any> {
 
     constructor(props) {
         super(props);
         this.state = {
-            list,
+            list: options,
             selected: null,
-            searchWord: ''
+            searchWord: '',
+            focus: false,
         };
         this.handleSearch = this.handleSearch.bind(this);
-        // this.handleClick = this.handleClick.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+        this.listener = this.listener.bind(this);
+        window.addEventListener('keydown', this.listener);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.listener);
+    }
+
+    listener(e) {
+        if (e.keyCode === 13 && this.state.focus) {
+            // press enter
+            console.log(this.state.searchWord);
+            this.props.onNewNote(this.state.searchWord);
+        }
     }
 
     handleClick(key, e) {
@@ -41,6 +62,14 @@ export default class NoteList extends React.Component<any, any> {
         this.setState({
             searchWord: word
         })
+    }
+
+    onFocus() {
+        this.setState({focus: true});
+    }
+
+    onBlur() {
+        this.setState({focus: false});
     }
 
     renderMultiSel(list: Array) {
@@ -60,14 +89,18 @@ export default class NoteList extends React.Component<any, any> {
 
     render() {
         const searchWord = this.state.searchWord;
-        const list = options.filter((el) => {
+        const list = this.state.list.filter((el) => {
             return el.text.search(searchWord) !== -1;
         });
         return (
             <div className="noteList">
-                <input type="text" onChange={this.handleSearch}/>
+                <input type="text" onChange={this.handleSearch} onFocus={this.onFocus} onBlur={this.onBlur}/>
                 {this.renderMultiSel(list)}
             </div>
         )
     }
+}
+
+function listener() {
+
 }

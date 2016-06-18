@@ -11,8 +11,13 @@ export interface INoteItem {
 
 export class Note {
     id: number;
-    title = '';
-    text = '';
+    title;
+    text;
+
+    constructor(title?, text?) {
+        this.title = title || '';
+        this.text = text || '';
+    }
 
     setTitle(title: string) {
         this.title = title;
@@ -22,6 +27,7 @@ export class Note {
         this.text = text;
     }
 }
+
 
 export class Storage {
     

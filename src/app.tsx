@@ -15,8 +15,9 @@ class App extends React.Component<any, any> {
             currentNote: null,
             noteInstance: new Note()
         };
-        this.onSelect = this.onSelect.bind(this);
+        this.onSetNote = this.onSetNote.bind(this);
         this.onInputEditor = this.onInputEditor.bind(this);
+        this.newNote = this.newNote.bind(this);
 
         // storage.add({text: 'text', title: 'lool'});
         // storage.exportStorage();
@@ -28,8 +29,14 @@ class App extends React.Component<any, any> {
         });
     }
 
-    onSelect(e) {
+    onSetNote(e) {
         console.log(e);
+    }
+
+    newNote(title) {
+        this.setState({
+            noteInstance: new Note(title)
+        })
     }
 
     onInputEditor(e: string) {
@@ -45,7 +52,10 @@ class App extends React.Component<any, any> {
         return (
             <div>
                 <h2>Simple Editor</h2>
-                <NoteList callback={this.onSelect}/>
+                <NoteList 
+                    onSetNote={this.onSetNote}
+                    onNewNote={this.newNote}
+                />
                 <SimpleMDEWrap value={noteInstance.text} onChange={this.onInputEditor}/>
             </div>
         )
