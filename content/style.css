@@ -1,7 +1,9 @@
 .noteList input {
+    padding: 5px;
     border: 1px solid #bbb;
     border-radius: 4px;
-    width: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .noteList ul {
