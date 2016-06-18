@@ -103,7 +103,10 @@ function bundleAppTs(done) {
       console.log(e.message);
     })
     .pipe(source('./app.js'))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist'))
+    .on('end', function () {
+      done();
+    });
 }
 
 //------------------------------------------------------------------------------
@@ -210,8 +213,9 @@ gulp.task('clean', function() {
     .pipe(clean({force: true}));
 });
 
-gulp.task('watch', ['bundle-app', 'content'], function () {
-  gulp.watch(['./src/**/*.jsx', 'src/**/*.js', 'content/*', 'index.html', 'sass/**/*'], ['dist']);
+gulp.task('watch', [/*'bundle-app', 'content'*/], function () {
+  gulp.watch(['./src/**/*.tsx', './src/**/*.ts'], ['bundle-app', 'content']);
+  // gulp.watch(['./src/**/*.jsx', 'src/**/*.js', 'content/*', 'index.html', 'sass/**/*'], ['dist']);
 });
 
 gulp.task('default', ['dist']);
