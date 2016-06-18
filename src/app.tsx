@@ -7,7 +7,8 @@ import {storage, Note} from "./Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 
 class App extends React.Component<any, any> {
-    
+    timerId;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -68,6 +69,14 @@ class App extends React.Component<any, any> {
         this.setState({
             noteInstance: note
         });
+
+        if (this.timerId) {
+            window.clearInterval(this.timerId);
+        }
+        this.timerId = window.setTimeout((e) => {
+            storage.setById(note.id, note);
+            storage.exportStorage();
+        }, 1500);
     }
     
     render() {

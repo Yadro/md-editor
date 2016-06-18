@@ -47,6 +47,7 @@ export class Storage {
     constructor() {
         this.importStorage((items) => {
             this.data = items || this.data || [];
+            console.log('load from localstorage', items, this.data);
             this.dispatchEvent({type: 'update'});
         });
     }
@@ -100,7 +101,6 @@ export class Storage {
         chrome.storage.local.get('storage', (data: any) => {
             if (data.storage != null) {
                 if (isArray(data.storage)) {
-                    debugger;
                     callback(data.storage);
                 }
             }
@@ -108,6 +108,7 @@ export class Storage {
     }
 
     exportStorage() {
+        console.log('save to localstorage', this.data);
         chrome.storage.local.set({storage: this.data});
     }
 }
