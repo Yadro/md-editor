@@ -7,8 +7,12 @@ const list = [
 ];
 
 var options = [
-    {value: 1, text: 'Item One'},
-    {value: 2, text: 'Item Two'}
+    {id: 1, text: 'Item One'},
+    {id: 2, text: 'Item Two'},
+    {id: 3, text: 'Item One'},
+    {id: 4, text: 'Item Two'},
+    {id: 5, text: 'Item One'},
+    {id: 4, text: 'Item Two'},
 ]
 
 
@@ -44,8 +48,8 @@ export default class NoteList extends React.Component<any, any> {
         const li = list.map((e, key) => {
             return (
                 <li key={key}
-                    className={'noteListItem' + (e.value === selected ? ' selected' : '')}
-                    onClick={this.handleClick.bind(this, e.value)}>{e.text}</li>
+                    className={'noteListItem' + (e.id === selected ? ' selected' : '')}
+                    onClick={this.handleClick.bind(this, e.id)}>{e.text}</li>
             );
         });
         return (

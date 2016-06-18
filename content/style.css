@@ -10,6 +10,7 @@
     height: 50px;
     width: auto;
     list-style: none;
+    overflow-y: scroll;
 }
 
 li.noteListItem {
