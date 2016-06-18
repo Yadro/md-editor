@@ -6,12 +6,6 @@ import NoteList from './components/NoteList';
 import {storage, Note} from "./Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 
-storage.add(new Note('note1', 'text1'));
-storage.add(new Note('note2', 'text2'));
-storage.add(new Note('note3', 'text3'));
-storage.add(new Note('note4', 'text4'));
-storage.add(new Note('note5', 'text5'));
-
 class App extends React.Component<any, any> {
     
     constructor(props) {
@@ -50,7 +44,6 @@ class App extends React.Component<any, any> {
         console.log(note);
 
         if (noteInstance) {
-            noteInstance.setTitle(noteInstance.title + ' up');
             storage.setById(noteInstance.id, noteInstance);
         }
 

@@ -46,7 +46,8 @@ export class Storage {
 
     constructor() {
         this.importStorage((items) => {
-            this.data = items || [];
+            this.data = items || this.data || [];
+            this.dispatchEvent({type: 'update'});
         });
     }
 
@@ -96,10 +97,11 @@ export class Storage {
     }
 
     importStorage(callback: (data: INoteItem[]) => any) {
-        chrome.storage.local.get('storage', (data) => {
-            if (data != null) {
-                if (isArray(data)) {
-                    callback(data);
+        chrome.storage.local.get('storage', (data: any) => {
+            if (data.storage != null) {
+                if (isArray(data.storage)) {
+                    debugger;
+                    callback(data.storage);
                 }
             }
         });
