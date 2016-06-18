@@ -1,5 +1,5 @@
 .noteList input {
-    padding: 5px;
+    padding: 5px 15px 5px 15px;
     border: 1px solid #bbb;
     border-radius: 4px;
     width: 100%;
@@ -7,18 +7,21 @@
 }
 
 .noteList ul {
+    padding: 0;
     border: 1px solid #bbb;
     border-radius: 4px;
-    height: 50px;
+    height: 100px;
     width: auto;
     list-style: none;
     overflow-y: scroll;
 }
 
 li.noteListItem {
-
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 li.noteListItem.selected {
+    color: white;
     background-color: rgba(3, 114, 255, 1);
 }
