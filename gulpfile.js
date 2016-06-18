@@ -85,8 +85,8 @@ function bundleApp(done) {
 }
 
 function bundleAppTs(done) {
-  var files = glob.sync('./src/**/*.tsx', './node_modules');
-  const extensions = ['.tsx', '.ts'];
+  var files = glob.sync('./src/**/*.tsx', './src/**/*.ts', './src/**/*.ts', './node_modules');
+  const extensions = ['.tsx', '.ts', '.js'];
   const bundler = browserify({
       entries: files,
       extensions: extensions,
@@ -214,7 +214,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('watch', [/*'bundle-app', 'content'*/], function () {
-  gulp.watch(['./src/**/*.tsx', './src/**/*.ts'], ['bundle-app']);
+  gulp.watch(['./src/**/*.tsx', './src/**/*.ts', './src/**/*.js'], ['bundle-app']);
   gulp.watch('content/**/*.*', ['content']);
   // gulp.watch(['./src/**/*.jsx', 'src/**/*.js', 'content/*', 'index.html', 'sass/**/*'], ['dist']);
 });

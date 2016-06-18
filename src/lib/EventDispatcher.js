@@ -2,7 +2,6 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-define(["require", "exports"], function (require, exports) {
 
     var EventDispatcher = function () {}
 
@@ -112,4 +111,3 @@ define(["require", "exports"], function (require, exports) {
     };
 
     exports.EventDispatcher = EventDispatcher;
-});
