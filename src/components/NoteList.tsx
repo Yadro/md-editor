@@ -36,6 +36,12 @@ export default class NoteList extends React.Component<NoteListP, any> {
         window.removeEventListener('keydown', this.listener);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            list: nextProps.notes
+        })
+    }
+
     listener(e) {
         if (e.keyCode === 13 && this.state.focus) {
             // press enter
@@ -72,7 +78,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             return (
                 <li key={key}
                     className={'noteListItem' + (e.id === selected ? ' selected' : '')}
-                    onClick={this.onSelectNote.bind(this, e.id)}>{e.text}</li>
+                    onClick={this.onSelectNote.bind(this, e.id)}>{e.title}</li>
             );
         });
         return (
@@ -84,7 +90,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
     render() {
         const searchWord = this.state.searchWord;
         const list = this.state.list.filter((el) => {
-            return el.text.search(searchWord) !== -1;
+            return el.title.search(searchWord) !== -1;
         });
         return (
             <div className="noteList">
