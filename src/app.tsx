@@ -7,12 +7,21 @@ import * as SimpleMDE from 'simplemde';
 
 
 class App extends React.Component<any, any> {
+    
+    constructor(props) {
+        super(props);
+        this.onSelect = this.onSelect.bind(this);
+    }
 
+    onSelect(e) {
+        console.log(e);
+    }
+    
     render() {
         return (
             <div>
-                <h2>Hello</h2>
-                <NoteList />
+                <h2>Simple Editor</h2>
+                <NoteList callback={this.onSelect}/>
             </div>
         )
     }

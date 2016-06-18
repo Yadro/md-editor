@@ -18,14 +18,24 @@ export default class NoteList extends React.Component<any, any> {
         super(props);
         this.state = {
             list,
-            selected: null
+            selected: null,
+            searchWord: ''
         };
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick(key, e) {
         this.setState({
             selected: key
+        });
+        // this.props.callback(key);
+    }
+
+    handleSearch(e: Event) {
+        const word = e.target.value;
+        this.setState({
+            searchWord: word
         })
     }
 
@@ -34,16 +44,26 @@ export default class NoteList extends React.Component<any, any> {
         const li = list.map((e, key) => {
             return (
                 <li key={key}
-                    className={'noteListItem' + (key === selected ? ' selected' : '')}
+                    className={'noteListItem' + (e.value === selected ? ' selected' : '')}
                     onClick={this.handleClick.bind(this, e.value)}>{e.text}</li>
             );
         });
         return (
-            <ul className="noteList">{li}</ul>
+            <ul>{li}</ul>
         )
+
     }
 
     render() {
-        return this.renderMultiSel(options);
+        const searchWord = this.state.searchWord;
+        const list = options.filter((el) => {
+            return el.text.search(searchWord) !== -1;
+        });
+        return (
+            <div className="noteList">
+                <input type="text" onChange={this.handleSearch}/>
+                {this.renderMultiSel(list)}
+            </div>
+        )
     }
 }
