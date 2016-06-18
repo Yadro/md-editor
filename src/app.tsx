@@ -3,8 +3,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
-import * as SimpleMDE from 'simplemde';
 import {storage} from "./Storage";
+import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 
 
 class App extends React.Component<any, any> {
@@ -33,15 +33,10 @@ class App extends React.Component<any, any> {
             <div>
                 <h2>Simple Editor</h2>
                 <NoteList callback={this.onSelect}/>
+                <SimpleMDEWrap />
             </div>
         )
     }
 }
-
-new SimpleMDE({
-    element: document.getElementById("editor"),
-    spellChecker: false,
-    autoDownloadFontAwesome: false
-});
 
 ReactDOM.render(<App/>, document.querySelector('.react'));
