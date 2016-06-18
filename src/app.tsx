@@ -61,8 +61,11 @@ class App extends React.Component<any, any> {
     }
 
     newNote(title) {
+        const note = storage.add(new Note(title, 'sample text'));
+        console.log(note);
         this.setState({
-            noteInstance: new Note(title)
+            currentNote: note.id,
+            noteInstance: note,
         })
     }
 
@@ -78,7 +81,6 @@ class App extends React.Component<any, any> {
         const noteInstance = this.state.noteInstance;
         return (
             <div>
-                <h2>Simple Editor</h2>
                 <NoteList
                     notes={this.state.notes}
                     onSetNote={this.onSetNote}

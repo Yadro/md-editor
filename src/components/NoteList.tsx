@@ -1,13 +1,5 @@
 import * as React from 'react';
 
-var options = [
-    {id: 1, text: 'Item One'},
-    {id: 2, text: 'Item Two'},
-    {id: 3, text: 'Item One'},
-    {id: 4, text: 'Item Two'},
-    {id: 5, text: 'Item One'},
-    {id: 6, text: 'Item Two'},
-]
 
 interface NoteListP {
     notes;
@@ -20,7 +12,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
     constructor(props) {
         super(props);
         this.state = {
-            list: props.notes || options,
+            list: props.notes,
             selected: null,
             searchWord: '',
             focus: false,
@@ -42,11 +34,18 @@ export default class NoteList extends React.Component<NoteListP, any> {
         })
     }
 
+    /**
+     * Вызываем onNewNote если input в фокусе и нажат enter
+     * @param e
+     */
     listener(e) {
         if (e.keyCode === 13 && this.state.focus) {
             // press enter
             console.log(this.state.searchWord);
             this.props.onNewNote(this.state.searchWord);
+            this.setState({
+                searchWord: ''
+            });
         }
     }
 

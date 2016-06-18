@@ -54,6 +54,7 @@ export class Storage {
         item.id = this.data.length;
         this.data.push(item);
         this.dispatchEvent({type: 'add'});
+        return item;
     }
     
     remove(id) {
