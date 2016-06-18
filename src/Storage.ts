@@ -15,8 +15,14 @@ export class Note {
     text;
 
     constructor(title?, text?) {
-        this.title = title || '';
-        this.text = text || '';
+        if (typeof title === "object") {
+            this.text = title.text;
+            this.title = title.title;
+            this.id = title.id;
+        } else {
+            this.text = text || '';
+            this.title = title || '';
+        }
     }
 
     setTitle(title: string) {
@@ -73,7 +79,7 @@ export class Storage {
     getById(id) {
         let items = this.data.filter(e => e.id === id);
         if (items[0]) {
-            return copyObject(items[0]);
+            return new Note(copyObject(items[0]));
         }
         return null;
     }

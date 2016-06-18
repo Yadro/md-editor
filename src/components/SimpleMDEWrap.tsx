@@ -10,12 +10,10 @@ interface SimpleMDEWrapP {
 
 export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     simplemde;
+    getChanges = false;
 
     constructor(props) {
         super(props);
-        this.state = {
-            value: props.value || 'hello'
-        };
     }
 
     componentDidMount() {
@@ -25,13 +23,14 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
             spellChecker: false,
             autoDownloadFontAwesome: false
         });
-        this.simplemde.codemirror.setValue(this.state.value);
+        this.simplemde.codemirror.setValue(this.props.value);
 
         this.simplemde.codemirror.on("change", () => {
-            this.setState({
-                value: this.simplemde.value()
-            });
-            this.props.onChange(this.simplemde.value());
+            if (this.getChanges) {
+                this.getChanges = false
+            } else {
+                this.props.onChange(this.simplemde.value());
+            }
         });
     }
 
@@ -40,6 +39,7 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.getChanges = true;
         this.simplemde.codemirror.setValue(nextProps.value);
     }
     

@@ -34,8 +34,13 @@ class App extends React.Component<any, any> {
         });
     }
 
-    onSetNote(e) {
-        console.log(e);
+    onSetNote(id) {
+        const note = storage.getById(id);
+        console.log(note);
+        this.setState({
+            currentNote: id,
+            noteInstance: note
+        })
     }
 
     newNote(title) {

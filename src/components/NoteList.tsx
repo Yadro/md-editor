@@ -44,11 +44,11 @@ export default class NoteList extends React.Component<NoteListP, any> {
         }
     }
 
-    handleClick(key, e) {
+    onSelectNote(key, e) {
         this.setState({
             selected: key
         });
-        // this.props.callback(key);
+        this.props.onSetNote(key);
     }
 
     handleSearch(e: Event) {
@@ -72,7 +72,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             return (
                 <li key={key}
                     className={'noteListItem' + (e.id === selected ? ' selected' : '')}
-                    onClick={this.handleClick.bind(this, e.id)}>{e.text}</li>
+                    onClick={this.onSelectNote.bind(this, e.id)}>{e.text}</li>
             );
         });
         return (
