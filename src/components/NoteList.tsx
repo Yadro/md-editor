@@ -88,9 +88,11 @@ export default class NoteList extends React.Component<NoteListP, any> {
 
     render() {
         const searchWord = this.state.searchWord;
-        const list = this.state.list.filter((el) => {
-            return el.title.search(searchWord) !== -1;
-        });
+        const list = searchWord != '' ?
+            this.state.list.filter((el) => {
+                return filter(searchWord, el.title);
+            }) :
+            this.state.list;
         return (
             <div className="noteList">
                 <input type="text" onChange={this.handleSearch} onFocus={this.onFocus} onBlur={this.onBlur}/>
@@ -100,6 +102,13 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 }
 
-function listener() {
 
+function filter(query: string, string: string) {
+    string = string.toLocaleLowerCase();
+    query = query.toLocaleLowerCase();
+    const tokens = query.split(/[,.:;'"?!\-_ ]/);
+    return tokens.some((token) => {
+        if (token === '') return false;
+        return string.search(token) !== -1;
+    })
 }
