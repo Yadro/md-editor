@@ -1,22 +1,33 @@
+//noinspection TypeScriptCheckImport
+import {EventDispatcher} from './lib/EventDispatcher'
+
 const nameStorage = 'storage';
 
 export interface INoteItem {
-    id: number;
+    id?: number;
     title: string;
     text: string;
 }
 
-export default class Storage {
-
-    data: INoteItem[];
+export class Storage {
+    
+    dispatchEvent: (o: any) => any;
+    addEventListener: (e: string, Function) => any;
+    hasEventListener;
+    removeEventListener;
+    
+    data: INoteItem[] = [];
 
     constructor() {
-        this.data = this.importStorage() || [];
+        this.importStorage((items) => {
+            this.data = items || [];
+        });
     }
 
     add(item: INoteItem) {
         item.id = this.data.length;
-        this.data.push(item)
+        this.data.push(item);
+        this.dispatchEvent({type: 'add'});
     }
     
     remove(id) {
@@ -32,6 +43,7 @@ export default class Storage {
             throw new Error('id not found');
         }
         this.data.splice(idInArr, 1);
+        this.dispatchEvent({type: 'remove'});
     }
 
     getAll() {
@@ -53,20 +65,22 @@ export default class Storage {
         }
     }
 
-    importStorage(): INoteItem[] {
-        let raw = localStorage.getItem(nameStorage);
-        if (raw != "undefined" && raw != '') {
-            let items = JSON.parse(raw);
-            if (isArray(items)) {
-                return items;
+    importStorage(callback: (data: INoteItem[]) => any) {
+        chrome.storage.local.get('storage', (data) => {
+            if (data != null) {
+                if (isArray(data)) {
+                    callback(data);
+                }
             }
-        }
+        });
     }
 
     exportStorage() {
-        localStorage.setItem(nameStorage, JSON.stringify(this.data));
+        chrome.storage.local.set({storage: this.data});
     }
 }
+EventDispatcher.prototype.apply(Storage.prototype);
+export var storage = new Storage();
 
 export function isArray(o: any) {
     return {}.toString.call(o) == '[object Array]';

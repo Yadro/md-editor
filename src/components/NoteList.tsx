@@ -12,7 +12,7 @@ var options = [
     {id: 3, text: 'Item One'},
     {id: 4, text: 'Item Two'},
     {id: 5, text: 'Item One'},
-    {id: 4, text: 'Item Two'},
+    {id: 6, text: 'Item Two'},
 ]
 
 

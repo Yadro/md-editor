@@ -4,13 +4,24 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
 import * as SimpleMDE from 'simplemde';
+import {storage} from "./Storage";
 
 
 class App extends React.Component<any, any> {
     
     constructor(props) {
         super(props);
+        this.state = {};
         this.onSelect = this.onSelect.bind(this);
+
+        // storage.add({text: 'text', title: 'lool'});
+        // storage.exportStorage();
+        storage.addEventListener('remove', () => {
+            this.forceUpdate();
+        });
+        storage.addEventListener('add', () => {
+            this.forceUpdate();
+        });
     }
 
     onSelect(e) {
