@@ -6,6 +6,11 @@ import NoteList from './components/NoteList';
 import {storage, Note} from "./Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 
+storage.add(new Note('note1', 'text1'));
+storage.add(new Note('note2', 'text2'));
+storage.add(new Note('note3', 'text3'));
+storage.add(new Note('note4', 'text4'));
+storage.add(new Note('note5', 'text5'));
 
 class App extends React.Component<any, any> {
     
@@ -52,7 +57,8 @@ class App extends React.Component<any, any> {
         return (
             <div>
                 <h2>Simple Editor</h2>
-                <NoteList 
+                <NoteList
+                    notes={storage.getAll()}
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />

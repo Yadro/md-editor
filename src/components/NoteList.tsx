@@ -1,11 +1,5 @@
 import * as React from 'react';
 
-const list = [
-    'подключить редактор',
-    'фильтр',
-    'список заметок',
-];
-
 var options = [
     {id: 1, text: 'Item One'},
     {id: 2, text: 'Item Two'},
@@ -26,7 +20,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
     constructor(props) {
         super(props);
         this.state = {
-            list: options,
+            list: props.notes || options,
             selected: null,
             searchWord: '',
             focus: false,
