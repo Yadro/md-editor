@@ -17,6 +17,7 @@ class App extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
+            notes: storage.getAll(),
             currentNote: null,
             noteInstance: new Note()
         };
@@ -27,16 +28,32 @@ class App extends React.Component<any, any> {
         // storage.add({text: 'text', title: 'lool'});
         // storage.exportStorage();
         storage.addEventListener('remove', () => {
-            this.forceUpdate();
+            this.setState({notes: storage.getAll()});
         });
         storage.addEventListener('add', () => {
-            this.forceUpdate();
+            this.setState({notes: storage.getAll()});
+        });
+        storage.addEventListener('update', () => {
+            this.setState({notes: storage.getAll()});
         });
     }
 
+    /**
+     * Переключаемся на др заметку
+     * обновляем id и заметку
+     * сохраняем старую
+     * @param id
+     */
     onSetNote(id) {
+        const {noteInstance} = this.state;
         const note = storage.getById(id);
         console.log(note);
+
+        if (noteInstance) {
+            noteInstance.setTitle(noteInstance.title + ' up');
+            storage.setById(noteInstance.id, noteInstance);
+        }
+
         this.setState({
             currentNote: id,
             noteInstance: note
@@ -63,7 +80,7 @@ class App extends React.Component<any, any> {
             <div>
                 <h2>Simple Editor</h2>
                 <NoteList
-                    notes={storage.getAll()}
+                    notes={this.state.notes}
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />

@@ -85,10 +85,13 @@ export class Storage {
     }
 
     setById(id, newValue) {
-        let items = this.data.filter(e => e.id === id);
-        if (items.length !== 0) {
-            items[0] = newValue;
-        }
+        this.data = this.data.map(e => {
+            if (e.id === id) {
+                return newValue;
+            }
+            return e;
+        });
+        this.dispatchEvent({type: 'update'});
     }
 
     importStorage(callback: (data: INoteItem[]) => any) {
