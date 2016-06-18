@@ -85,16 +85,23 @@ function bundleApp(done) {
 }
 
 function bundleAppTs(done) {
-  var files = glob.sync('./src/**/*.tsx');
+  var files = glob.sync('./src/**/*.tsx', './node_modules');
+  const extensions = ['.tsx', '.ts'];
   const bundler = browserify({
       entries: files,
-      extensions: ['.tsx', '.ts'],
+      extensions: extensions,
       debug: true,
     })
     .plugin(tsify, { typescript: tsc })
-    .transform(babelify.configure({ extensions: ['.ts', '.js'], presets: ['es2015', 'react'] }));
+    .transform(babelify.configure({
+      extensions: extensions,
+      presets: ['es2015', 'react']
+    }));
 
   bundler.bundle()
+    .on("error", function(e){
+      console.log(e.message);
+    })
     .pipe(source('./app.js'))
     .pipe(gulp.dest('./dist'));
 }
@@ -123,7 +130,7 @@ function bundleTest(done) {
 // bundling strategy thanks to:
 // https://github.com/sogko/gulp-recipes/tree/master/browserify-separating-app-and-vendor-bundles
 
-gulp.task('bundle', ['bundle-vendor', 'bundle-app']);
+gulp.task('bundle', ['bundle-app']);
 
 gulp.task('bundle-app', function (done) {
   bundleAppTs(done);

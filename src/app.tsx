@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Comp from './components/compoent';
-import * as SimpleMDE from '../node_modules/simplemde/dist/simplemde.min.js';
+import * as SimpleMDE from 'simplemde';
 
 class App extends React.Component<any, any> {
 
