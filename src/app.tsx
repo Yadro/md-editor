@@ -6,6 +6,7 @@ import NoteList from './components/NoteList';
 import {storage, Note} from "./Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
+import SelectNotes from "./components/SelectNotes";
 
 class App extends React.Component<any, any> {
     timerId;
@@ -13,6 +14,8 @@ class App extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
+            menu: true,
+            privateMode: false, 
             notes: storage.getAll(),
             currentNote: null,
             noteInstance: new Note()
@@ -95,11 +98,14 @@ class App extends React.Component<any, any> {
     }
     
     render() {
-        const noteInstance = this.state.noteInstance;
+        const {noteInstance, privateMode, notes} = this.state;
+        if (this.state.menu) {
+            return <SelectNotes callback={(st) => this.setState({menu: false, privateMode: st === 2})}/>
+        }
         return (
-            <div>
+            <div className={privateMode ? 'grey-bg' : ''}>
                 <NoteList
-                    notes={this.state.notes}
+                    notes={notes}
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />
