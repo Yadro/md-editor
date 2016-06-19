@@ -189,6 +189,7 @@ gulp.task('bootstrap', function (done) {
 
 gulp.task('styles', function (done) {
   gulp.src([
+    'node_modules/react-tagsinput/react-tagsinput.css',
     'node_modules/simplemde/dist/simplemde.min.css',
     'node_modules/font-awesome/css/font-awesome.min.css'])
     .pipe(gulp.dest('./dist/style'))

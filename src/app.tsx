@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
 import {storage, Note} from "./Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
+import TagInput from "./components/TagInput";
 
 class App extends React.Component<any, any> {
     timerId;
@@ -88,6 +89,7 @@ class App extends React.Component<any, any> {
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />
+                <TagInput />
                 <SimpleMDEWrap 
                     value={noteInstance.text}
                     onChange={this.onInputEditor}
