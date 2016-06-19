@@ -59,7 +59,10 @@ class App extends React.Component<any, any> {
     onChangeTags(tags) {
         const {noteInstance} = this.state;
         noteInstance.setTag(tags);
+
         storage.setById(noteInstance.id, noteInstance);
+        storage.exportStorage();
+
         this.setState({
             noteInstance
         })
