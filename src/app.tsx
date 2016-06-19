@@ -20,6 +20,7 @@ class App extends React.Component<any, any> {
         this.onSetNote = this.onSetNote.bind(this);
         this.onInputEditor = this.onInputEditor.bind(this);
         this.newNote = this.newNote.bind(this);
+        this.onChangeTags = this.onChangeTags.bind(this);
 
         // storage.add({text: 'text', title: 'lool'});
         // storage.exportStorage();
@@ -43,7 +44,7 @@ class App extends React.Component<any, any> {
     onSetNote(id) {
         const {noteInstance} = this.state;
         const note = storage.getById(id);
-        console.log(note);
+        console.log('select ', note);
 
         if (noteInstance) {
             storage.setById(noteInstance.id, noteInstance);
@@ -55,8 +56,18 @@ class App extends React.Component<any, any> {
         })
     }
 
+    onChangeTags(tags) {
+        const {noteInstance} = this.state;
+        noteInstance.setTag(tags);
+        storage.setById(noteInstance.id, noteInstance);
+        this.setState({
+            noteInstance
+        })
+    }
+
+
     newNote(title) {
-        const note = storage.add(new Note(title, 'sample text'));
+        const note = storage.add(new Note(title, 'text'));
         console.log(note);
         this.setState({
             currentNote: note.id,
@@ -89,7 +100,7 @@ class App extends React.Component<any, any> {
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />
-                <TagInput />
+                <TagInput tags={noteInstance.tags} onChangeTags={this.onChangeTags}/>
                 <SimpleMDEWrap 
                     value={noteInstance.text}
                     onChange={this.onInputEditor}

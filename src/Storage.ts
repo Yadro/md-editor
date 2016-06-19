@@ -7,21 +7,25 @@ export interface INoteItem {
     id?: number;
     title: string;
     text: string;
+    tags: string[];
 }
 
 export class Note {
     id: number;
     title;
     text;
+    tags: string[];
 
     constructor(title?, text?) {
         if (typeof title === "object") {
             this.text = title.text;
             this.title = title.title;
             this.id = title.id;
+            this.tags = title.tags || [];
         } else {
             this.text = text || '';
             this.title = title || '';
+            this.tags = [];
         }
     }
 
@@ -31,6 +35,10 @@ export class Note {
 
     setText(text: string) {
         this.text = text;
+    }
+    
+    setTag(tags) {
+        this.tags = tags;
     }
 }
 
@@ -43,6 +51,7 @@ export class Storage {
     removeEventListener;
     
     data: INoteItem[] = [];
+    tags: string[];
 
     constructor() {
         this.importStorage((items) => {
@@ -87,6 +96,11 @@ export class Storage {
         return null;
     }
 
+    /**
+     * Присваиваем новое значение newValue
+     * @param id
+     * @param newValue
+     */
     setById(id, newValue) {
         this.data = this.data.map(e => {
             if (e.id === id) {

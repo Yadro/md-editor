@@ -1,60 +1,28 @@
 import * as React from 'react';
 import * as TagsInput from 'react-tagsinput';
-debugger;
-
-const names = [
-    "Aaliyah",
-    "Aarushi",
-    "Abagail",
-    "Abbey",
-    "Abbi",
-    "Abbie",
-    "Abby",
-    "Abi",
-    "Abia",
-    "Abigail",
-    "Aby",
-    "Acacia",
-    "Ada",
-    "Adalia",
-    "Adalyn",
-    "Addie",
-    "Addison",
-    "Adelaide",
-    "Adele",
-    "Adelia",
-    "Adelina",
-    "Adeline",
-    "Adreanna",
-    "Adriana",
-    "Adrianna",
-    "Adrianne",
-    "Adrienne",
-    "Aerona",
-    "Agatha",
-    "Aggie",
-    "Agnes",
-    "Aida",
-]
 
 interface TagInputP {
-
+    onChangeTags: (tags) => any;
+    tags: string[]
 }
 
 export default class TagInput extends React.Component<TagInputP, any> {
     constructor(props) {
         super(props);
         this.state = {
-            input: '',
-            loading: false,
-            selected: [],
-            tags: ["tag1", "tag2"]
+            tags: props.tags
         }
     }
 
-    handleChange(value) {
+    componentWillReceiveProps(nextProps: TagInputP) {
+        this.setState({
+            tags: nextProps.tags
+        })
+    }
 
+    handleChange(value) {
         this.setState({tags: value});
+        this.props.onChangeTags(value);
     }
 
     render() {
