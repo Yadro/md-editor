@@ -25,3 +25,7 @@ li.noteListItem.selected {
     color: white;
     background-color: rgba(3, 114, 255, 1);
 }
+
+.CodeMirror {
+    height: 600px !important;
+}

@@ -26,8 +26,9 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
             spellChecker: false,
             autoDownloadFontAwesome: false
         });
-        this.simplemde.codemirror.setValue(this.props.value);
+        // this.simplemde.codemirror.setOption('viewportMargin', Infinity);
 
+        this.simplemde.codemirror.setValue(this.props.value);
         this.simplemde.codemirror.on("change", () => {
             if (this.getChanges) {
                 this.getChanges = false
