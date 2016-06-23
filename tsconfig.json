@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-//    "module": "amd",
+    "module": "commonjs",
     "target": "es5",
-    "jsx" :  "react",
+    "jsx":  "react",
     "sourceMap": true
   },
   "exclude": [
     "node_modules"
-  ],
-  "files": [
-    "./typings/index.d.ts"
   ]
+  /*"files": [
+    "./typings/index.d.ts"
+  ]*/
 }
