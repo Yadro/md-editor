@@ -2,7 +2,7 @@
 node_modules
 
 dist
-build_2
+build2
 
 typings
 typings.json
