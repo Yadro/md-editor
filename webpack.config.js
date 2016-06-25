@@ -15,10 +15,10 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'ts-loader',
         exclude: [/node_modules/]
-      }/*, {
+      }, {
         test: /\.css$/,
         loader: 'style!css',
-      }, {
+      }/* {
         test: /\.(png|jpg|otf|eot|svg|ttg|woff2?)$/,
         loader: 'file-loader',
         include: [/node_modules/]
@@ -41,7 +41,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {from: 'index.html'},
-      // {from: 'content/**/*'},
+      {from: 'content/manifest.json'},
+      {from: 'content/background.js'},
       // {from: './node_modules/font-awesome/fonts/*'},
       {from: 'node_modules/simplemde/dist/simplemde.min.css', to: 'style'},
       {from: 'node_modules/react-tagsinput/react-tagsinput.css', to: 'style'},

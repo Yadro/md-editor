@@ -1,5 +1,7 @@
 ///<reference path="../typings/index.d.ts"/>
 
+import '../content/style.css';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
