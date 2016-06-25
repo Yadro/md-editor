@@ -30,6 +30,24 @@ li.noteListItem.selected {
     background-color: #cccccc;
 }
 
+/******FIX STYLES *********/
 .CodeMirror {
     height: 600px !important;
+}
+.react-tagsinput-tag a::before {
+    content: " x";
+}
+/**************************/
+
+.react-tagsinput {
+    border-radius: 4px;
+}
+
+.editor-toolbar {
+    margin-top: 5px;
+}
+
+.editor-preview {
+    font-size: 18px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
