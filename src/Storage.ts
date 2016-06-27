@@ -65,7 +65,7 @@ export class Storage {
     add(item: INoteItem) {
         item.id = this.data.length;
         this.data.push(item);
-        this.dispatchEvent({type: 'add'});
+        this.dispatchEvent({type: 'update'});
         return item;
     }
 
@@ -82,7 +82,7 @@ export class Storage {
             throw new Error('id not found');
         }
         this.data.splice(idInArr, 1);
-        this.dispatchEvent({type: 'remove'});
+        this.dispatchEvent({type: 'update'});
     }
 
     getAll(privateMode: boolean) {

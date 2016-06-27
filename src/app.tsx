@@ -30,12 +30,6 @@ class App extends React.Component<any, any> {
 
         // storage.add({text: 'text', title: 'lool'});
         // storage.exportStorage();
-        storage.addEventListener('remove', () => {
-            this.setState({notes: storage.getAll(this.state.privateMode)});
-        });
-        storage.addEventListener('add', () => {
-            this.setState({notes: storage.getAll(this.state.privateMode)});
-        });
         storage.addEventListener('update', () => {
             this.setState({notes: storage.getAll(this.state.privateMode)});
         });
