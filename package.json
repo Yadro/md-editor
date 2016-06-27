@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "font-awesome": "^4.6.3",
+    "lodash": "^4.13.1",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-filtered-multiselect": "^0.4.2",

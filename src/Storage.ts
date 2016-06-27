@@ -1,5 +1,6 @@
 //noinspection TypeScriptCheckImport
 import {EventDispatcher} from './lib/EventDispatcher'
+import * as _ from 'lodash';
 
 const nameStorage = 'storage';
 
@@ -36,7 +37,7 @@ export class Note {
     setText(text: string) {
         this.text = text;
     }
-    
+
     setTag(tags) {
         this.tags = tags;
     }
@@ -44,12 +45,12 @@ export class Note {
 
 
 export class Storage {
-    
+
     dispatchEvent: (o: any) => any;
     addEventListener: (e: string, Function) => any;
     hasEventListener;
     removeEventListener;
-    
+
     data: INoteItem[] = [];
     tags: string[];
 
@@ -67,7 +68,7 @@ export class Storage {
         this.dispatchEvent({type: 'add'});
         return item;
     }
-    
+
     remove(id) {
         let objects = this.data.filter(o => o.id == id);
         if (!objects.length) {
@@ -84,8 +85,12 @@ export class Storage {
         this.dispatchEvent({type: 'remove'});
     }
 
-    getAll() {
-        return this.data;
+    getAll(privateMode: boolean) {
+        if (privateMode) {
+            return this.data;
+        } else {
+            return this.data.filter((item) => item.tags.indexOf('private') === -1);
+        }
     }
 
     getById(id) {

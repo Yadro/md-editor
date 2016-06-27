@@ -4,7 +4,7 @@ interface SelectNotesP {
     callback: Function;
 }
 
-export default class SelectNotes extends React.Component<SelectNotesP, any> {
+export default class Welcome extends React.Component<SelectNotesP, any> {
     constructor(props) {
         super(props);
         this.state = {

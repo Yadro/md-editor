@@ -8,7 +8,7 @@ import NoteList from './components/NoteList';
 import {storage, Note} from "./Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
-import SelectNotes from "./components/SelectNotes";
+import Welcome from "./components/Welcome";
 
 class App extends React.Component<any, any> {
     timerId;
@@ -18,7 +18,7 @@ class App extends React.Component<any, any> {
         this.state = {
             menu: true,
             privateMode: false, 
-            notes: storage.getAll(),
+            notes: [],
             currentNote: null,
             noteInstance: new Note()
         };
@@ -26,17 +26,18 @@ class App extends React.Component<any, any> {
         this.onInputEditor = this.onInputEditor.bind(this);
         this.newNote = this.newNote.bind(this);
         this.onChangeTags = this.onChangeTags.bind(this);
+        this.onEnter = this.onEnter.bind(this);
 
         // storage.add({text: 'text', title: 'lool'});
         // storage.exportStorage();
         storage.addEventListener('remove', () => {
-            this.setState({notes: storage.getAll()});
+            this.setState({notes: storage.getAll(this.state.privateMode)});
         });
         storage.addEventListener('add', () => {
-            this.setState({notes: storage.getAll()});
+            this.setState({notes: storage.getAll(this.state.privateMode)});
         });
         storage.addEventListener('update', () => {
-            this.setState({notes: storage.getAll()});
+            this.setState({notes: storage.getAll(this.state.privateMode)});
         });
     }
 
@@ -99,10 +100,19 @@ class App extends React.Component<any, any> {
         }, 1500);
     }
     
+    onEnter(st) {
+        const privateMode = st === 2;
+        this.setState({
+            menu: false,
+            privateMode,
+            notes: storage.getAll(privateMode)
+        })
+    }
+    
     render() {
         const {noteInstance, privateMode, notes} = this.state;
         if (this.state.menu) {
-            return <SelectNotes callback={(st) => this.setState({menu: false, privateMode: st === 2})}/>
+            return <Welcome callback={this.onEnter}/>
         }
         return (
             <div className={privateMode ? 'grey-bg' : ''}>
