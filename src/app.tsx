@@ -100,7 +100,10 @@ class App extends React.Component<any, any> {
             menu: false,
             privateMode,
             notes: storage.getAll(privateMode)
-        })
+        });
+        if (privateMode) {
+            document.querySelector('body').className = 'private';
+        }
     }
     
     render() {

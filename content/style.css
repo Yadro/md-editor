@@ -27,7 +27,7 @@ li.noteListItem.selected {
 }
 
 .grey-bg {
-    background-color: #cccccc;
+    /*background-color: #cccccc;*/
 }
 
 /******FIX STYLES *********/
@@ -50,4 +50,8 @@ li.noteListItem.selected {
 .editor-preview {
     font-size: 18px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.private {
+    background: grey;
 }
