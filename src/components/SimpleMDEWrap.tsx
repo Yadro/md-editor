@@ -24,7 +24,9 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
         this.simplemde = new SimpleMDE({
             element: document.getElementById("editor"),
             spellChecker: false,
-            autoDownloadFontAwesome: false
+            autoDownloadFontAwesome: false,
+            toolbar: ["bold", "italic", "heading", "|", "quote", 'link', 'image', 'table', '|', 'code',
+            '|', 'preview', 'side-by-side'],
         });
         // this.simplemde.codemirror.setOption('viewportMargin', Infinity);
 
