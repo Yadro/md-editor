@@ -9,6 +9,7 @@ export interface INoteItem {
     title: string;
     text: string;
     tags: string[];
+    createTime: number;
 }
 
 export class Note {
@@ -16,6 +17,7 @@ export class Note {
     title;
     text;
     tags: string[];
+    createTime: number;
 
     constructor(title?, text?) {
         if (typeof title === "object") {
@@ -23,10 +25,12 @@ export class Note {
             this.title = title.title;
             this.id = title.id;
             this.tags = title.tags || [];
+            this.createTime = title.createTime || Date.now();
         } else {
             this.text = text || '';
             this.title = title || '';
             this.tags = [];
+            this.createTime = Date.now();
         }
     }
 

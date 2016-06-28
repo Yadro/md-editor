@@ -83,3 +83,7 @@ li.noteListItem.selected {
 .fa {
     font-size: 19px;
 }
+
+.note-time {
+    float: right;
+}

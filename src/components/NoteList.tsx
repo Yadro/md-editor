@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {Note} from "../Storage";
+import * as moment from "moment";
 
 
 interface NoteListP {
@@ -71,13 +73,16 @@ export default class NoteList extends React.Component<NoteListP, any> {
         this.setState({focus: false});
     }
 
-    renderMultiSel(list: Array) {
+    renderNoteList(list: Array) {
         const {selected} = this.state;
-        const li = list.map((e, key) => {
+        const li = list.map((e: Note, key) => {
             return (
                 <li key={key}
                     className={'noteListItem' + (e.id === selected ? ' selected' : '')}
-                    onClick={this.onSelectNote.bind(this, e.id)}>{e.title}</li>
+                    onClick={this.onSelectNote.bind(this, e.id)}>
+                    <span className="note-text">{e.title}</span>
+                    <span className="note-time">{moment(e.createTime).format('HH:mm:ss')}</span>
+                </li>
             );
         });
         return (
@@ -96,7 +101,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
         return (
             <div className="noteList">
                 <input type="text" onChange={this.handleSearch} onFocus={this.onFocus} onBlur={this.onBlur}/>
-                {this.renderMultiSel(list)}
+                {this.renderNoteList(list)}
             </div>
         )
     }
