@@ -67,6 +67,19 @@ li.noteListItem.selected {
     background: grey;
 }
 
+/********** Tags **********/
+.react-tagsinput-tag {
+
+}
+.private-tag {
+    color: white;
+    background: grey;
+}
+.private-tag a {
+    color: white;
+}
+/**************************/
+
 .fa {
     font-size: 19px;
 }

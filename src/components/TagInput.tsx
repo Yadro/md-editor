@@ -1,4 +1,5 @@
 import * as React from 'react';
+//noinspection TypeScriptCheckImport
 import * as TagsInput from 'react-tagsinput';
 
 interface TagInputP {
@@ -25,12 +26,23 @@ export default class TagInput extends React.Component<TagInputP, any> {
         this.props.onChangeTags(value);
     }
 
+    renderTag(props) {
+        let {tag, key, onRemove, ...other} = props;
+        return (
+            <span key={key} className={'react-tagsinput-tag' + (tag === 'private' ? ' private-tag' : '')} {...other}>
+                {tag}
+                <a onClick={(e) => onRemove(key)}/>
+            </span>
+        );
+    }
+
     render() {
         return (
             <TagsInput
                 value={this.state.tags}
                 onChange={this.handleChange.bind(this)}
                 addOnPaste={true}
+                renderTag={this.renderTag}
             />
         )
     }
