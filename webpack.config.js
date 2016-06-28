@@ -1,11 +1,12 @@
 "use strict";
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var path = require('path');
 
 module.exports = {
 
-  entry: __dirname + "/src/app.tsx",
+  entry: path.join(__dirname, "src", "app.tsx"),
   output: {
-    path: __dirname + "/build2",
+    path: path.join(__dirname, "build2"),
     filename: 'app.js'
   },
 
@@ -33,7 +34,7 @@ module.exports = {
 
   //watch: true,
   watchOptions: {
-    aggregateTimeout: 50
+    aggregateTimeout: 150
   },
 
   devtool: "source-map",
