@@ -1,3 +1,4 @@
+/*********** Note List *******/
 .noteList input {
     padding: 5px 15px 5px 15px;
     border: 1px solid #bbb;
@@ -14,6 +15,14 @@
     width: auto;
     list-style: none;
     overflow-y: scroll;
+    background-color: white;
+}
+
+li.noteListItem:first-of-type {
+    margin-top: 5px;
+}
+li.noteListItem:last-of-type {
+    margin-bottom: 5px;
 }
 
 li.noteListItem {
@@ -30,7 +39,7 @@ li.noteListItem.selected {
     /*background-color: #cccccc;*/
 }
 
-/******FIX STYLES *********/
+/****** FIX STYLES *********/
 .CodeMirror {
     height: 600px !important;
 }
@@ -43,8 +52,10 @@ li.noteListItem.selected {
     border-radius: 4px;
 }
 
+
 .editor-toolbar {
     margin-top: 5px;
+    background-color: white;
 }
 
 .editor-preview {
@@ -54,4 +65,8 @@ li.noteListItem.selected {
 
 .private {
     background: grey;
+}
+
+.fa {
+    font-size: 19px;
 }
