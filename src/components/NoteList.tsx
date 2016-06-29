@@ -81,14 +81,14 @@ export default class NoteList extends React.Component<NoteListP, any> {
 
     renderNoteList(list: Array) {
         const {selected} = this.state;
-        const li = list.map((e: Note, key) => {
+        const li = list.map((note: Note, key) => {
             return (
                 <li key={key}
-                    className={'noteListItem' + (e.id === selected ? ' selected' : '')}
-                    onClick={this.onSelectNote.bind(this, e.id)}>
-                    <span className="note-text">{e.title}</span>
-                    <span className="note-preview">{getPreviewText(e.text)}</span>
-                    <span className="note-time">{this._getTimeString(e.createTime)}</span>
+                    className={'noteListItem' + (note.id === selected ? ' selected' : '')}
+                    onClick={this.onSelectNote.bind(this, note.id)}>
+                    <span className="note-text">{note.title}</span>
+                    <span className="note-preview">{getPreviewText(note.text)}</span>
+                    <span className="note-time">{this._getTimeString(note.createTime)}</span>
                 </li>
             );
         });
@@ -119,6 +119,17 @@ export default class NoteList extends React.Component<NoteListP, any> {
             return 'today at ' + moment(time).format('HH:mm:ss')
         }
         return moment(time).format('dd DD.MM.YY HH:mm:ss');
+    }
+
+    _getTimeStringPrefix(note: Note): string {
+        let prefix = '';
+        if (note.createTime !== note.editTime) {
+            prefix += 'last edit '
+        }
+        if (itsToday(note.editTime, this.now)) {
+            return prefix + 'today at ' + moment(note.editTime).format('HH:mm:ss')
+        }
+        return prefix + moment(note.editTime).format('dd DD.MM.YY HH:mm:ss');
     }
 }
 

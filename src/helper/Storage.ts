@@ -112,7 +112,6 @@ export class Storage {
 
     /**
      * Присваиваем новое значение newValue
-     * сохраняем время изменений
      * @param id
      * @param newValue
      */
@@ -125,6 +124,17 @@ export class Storage {
             return e;
         });
         this.dispatchEvent({type: 'update'});
+    }
+
+    /**
+     * Присваиваем новое значение newValue
+     * сохраняем время изменений
+     * @param id
+     * @param newValue
+     */
+    setByIdSaveDate(id: number, newValue: Note) {
+        newValue.editTime = Date.now();
+        this.setById(id, newValue);
     }
 
     importStorage(callback: (data: INoteItem[]) => any) {

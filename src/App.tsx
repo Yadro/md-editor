@@ -55,9 +55,10 @@ class App extends React.Component<any, AppS> {
     onSetNote(id) {
         const {noteInstance} = this.state;
         const note = storage.getById(id);
-        console.log('select ', note);
+        console.log('select note id:'+note.id);
 
         if (noteInstance) {
+            console.log('save in storage:'+note.id);
             storage.setById(noteInstance.id, noteInstance);
         }
 
