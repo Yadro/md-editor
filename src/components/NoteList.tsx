@@ -12,7 +12,7 @@ interface NoteListP {
 
 export default class NoteList extends React.Component<NoteListP, any> {
 
-    now: number;
+    now: moment.Moment;
 
     constructor(props) {
         super(props);
@@ -81,6 +81,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
 
     renderNoteList(list: Array) {
         const {selected} = this.state;
+
         const li = list.map((note: Note, key) => {
             return (
                 <li key={key}
@@ -99,7 +100,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     render() {
-        this.now = Date.now();
+        this.now = moment();
         const searchWord = this.state.searchWord;
         const list = searchWord != '' ?
             this.state.list.filter((el) => {
@@ -115,10 +116,10 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     _getTimeString(time: number): string {
-        if (itsToday(time, this.now)) {
+        if (itsTodayTime(time, this.now)) {
             return 'today at ' + moment(time).format('HH:mm:ss')
         }
-        return moment(time).format('dd DD.MM.YY HH:mm:ss');
+        return moment(time).format('dd DD.MM HH:mm');
     }
 
     _getTimeStringPrefix(note: Note): string {
@@ -126,7 +127,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
         if (note.createTime !== note.editTime) {
             prefix += 'last edit '
         }
-        if (itsToday(note.editTime, this.now)) {
+        if (itsTodayTime(note.editTime, this.now)) {
             return prefix + 'today at ' + moment(note.editTime).format('HH:mm:ss')
         }
         return prefix + moment(note.editTime).format('dd DD.MM.YY HH:mm:ss');
@@ -135,6 +136,14 @@ export default class NoteList extends React.Component<NoteListP, any> {
 
 function getPreviewText(text: string): string {
     return ' - ' + text.slice(0, 20);
+}
+
+function itsTodayTime(date: number, now: moment.Moment) {
+    const _date = moment(date);
+    return (
+        _date.year() === now.year() &&
+        _date.dayOfYear() === now.dayOfYear()
+    );
 }
 
 function itsToday(date: number, now: number) {
