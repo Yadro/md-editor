@@ -35,10 +35,11 @@ li.noteListItem.selected {
 }
 
 li.noteListItem .note-text {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 li.noteListItem .note-preview {
-    font-style: italic;
+    /*font-style: italic;*/
+    color: #bbbbbb;
 }
 li.noteListItem .note-time {
     font-style: italic;
