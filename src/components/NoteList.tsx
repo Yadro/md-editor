@@ -49,7 +49,6 @@ export default class NoteList extends React.Component<NoteListP, any> {
     listener(e) {
         if (e.keyCode === 13 && this.state.focus) {
             // press enter
-            console.log(this.state.searchWord);
             this.props.onNewNote(this.state.searchWord);
             this.setState({
                 searchWord: ''

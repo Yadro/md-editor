@@ -75,6 +75,7 @@ export class Storage {
         item.id = this.data.length;
         this.data.push(item);
         this.dispatchEvent({type: 'update'});
+        this.exportStorage();
         return item;
     }
 
