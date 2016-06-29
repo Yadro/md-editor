@@ -38,9 +38,7 @@ class App extends React.Component<any, AppS> {
             'onChangeTags',
             'onEnter',
         ].forEach(fn => this[fn] = this[fn].bind(this));
-
-        // storage.add({text: 'text', title: 'lool'});
-        // storage.exportStorage();
+        
         storage.addEventListener('update', () => {
             this.setState({notes: storage.getAll(this.state.privateMode)});
         });
@@ -81,6 +79,10 @@ class App extends React.Component<any, AppS> {
     }
 
 
+    /**
+     * Создаем новую заметку
+     * @param title
+     */
     newNote(title) {
         const note = storage.add(new Note(title, 'text'));
         console.log(note);
@@ -97,10 +99,6 @@ class App extends React.Component<any, AppS> {
             noteInstance: note
         });
 
-        /**
-         * установка таймера на сохранение заметки
-         * todo переместить логику в storage.setById
-         */
         if (this.timerId) {
             window.clearInterval(this.timerId);
         }
