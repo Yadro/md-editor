@@ -121,7 +121,7 @@ class App extends React.Component<any, AppS> {
     }
     
     render() {
-        const {noteInstance, privateMode, notes} = this.state;
+        const {noteInstance, privateMode, notes, currentNote} = this.state;
         if (this.state.menu) {
             return <Welcome callback={this.onEnter}/>
         }
@@ -129,6 +129,7 @@ class App extends React.Component<any, AppS> {
             <div className={privateMode ? 'grey-bg' : ''}>
                 <NoteList
                     notes={notes}
+                    currentNote={currentNote}
                     onSetNote={this.onSetNote}
                     onNewNote={this.newNote}
                 />
@@ -136,7 +137,7 @@ class App extends React.Component<any, AppS> {
                 <SimpleMDEWrap 
                     value={noteInstance.text}
                     onChange={this.onInputEditor}
-                    currentNote={this.state.currentNote}
+                    currentNote={currentNote}
                 />
             </div>
         )

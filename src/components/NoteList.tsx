@@ -8,6 +8,7 @@ interface NoteListP {
     notes;
     onSetNote: (id) => any;
     onNewNote: (title: string) => any;
+    currentNote: number;
 }
 
 export default class NoteList extends React.Component<NoteListP, any> {
@@ -36,9 +37,10 @@ export default class NoteList extends React.Component<NoteListP, any> {
         window.removeEventListener('keydown', this.listener);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: NoteListP) {
         this.setState({
-            list: nextProps.notes
+            list: nextProps.notes,
+            selected: nextProps.currentNote
         })
     }
 
