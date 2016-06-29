@@ -1,6 +1,6 @@
 import './NoteList.css';
 import * as React from 'react';
-import {Note} from "../Storage";
+import {Note} from "../helper/Storage";
 import * as moment from "moment";
 
 

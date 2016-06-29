@@ -31,11 +31,13 @@ class App extends React.Component<any, AppS> {
             currentNote: null,
             noteInstance: new Note()
         };
-        this.onSetNote = this.onSetNote.bind(this);
-        this.onInputEditor = this.onInputEditor.bind(this);
-        this.newNote = this.newNote.bind(this);
-        this.onChangeTags = this.onChangeTags.bind(this);
-        this.onEnter = this.onEnter.bind(this);
+        [
+            'onSetNote',
+            'onInputEditor',
+            'newNote',
+            'onChangeTags',
+            'onEnter',
+        ].forEach(fn => this[fn] = this[fn].bind(this));
 
         // storage.add({text: 'text', title: 'lool'});
         // storage.exportStorage();
