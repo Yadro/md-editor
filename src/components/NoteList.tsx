@@ -11,6 +11,8 @@ interface NoteListP {
 
 export default class NoteList extends React.Component<NoteListP, any> {
 
+    now: number;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -81,7 +83,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
                     className={'noteListItem' + (e.id === selected ? ' selected' : '')}
                     onClick={this.onSelectNote.bind(this, e.id)}>
                     <span className="note-text">{e.title}</span>
-                    <span className="note-time">{moment(e.createTime).format('HH:mm:ss')}</span>
+                    <span className="note-time">{this._getTimeString(e.createTime)}</span>
                 </li>
             );
         });
@@ -92,6 +94,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     render() {
+        this.now = Date.now();
         const searchWord = this.state.searchWord;
         const list = searchWord != '' ?
             this.state.list.filter((el) => {
@@ -105,8 +108,18 @@ export default class NoteList extends React.Component<NoteListP, any> {
             </div>
         )
     }
+
+    _getTimeString(time: number): string {
+        if (itsToday(time, this.now)) {
+            return 'today at ' + moment(time).format('HH:mm:ss')
+        }
+        return moment(time).format('dd DD.MM.YY HH:mm:ss');
+    }
 }
 
+function itsToday(date: number, now: number) {
+    return (now - date) <= 24 * 60 * 60 * 1000;
+}
 
 function filter(query: string, string: string) {
     string = string.toLocaleLowerCase();
