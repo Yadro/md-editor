@@ -35,6 +35,17 @@ li.noteListItem.selected {
     background-color: rgba(3, 114, 255, 1);
 }
 
+li.noteListItem .note-text {
+    font-weight: bold;
+}
+li.noteListItem .note-preview {
+    font-style: italic;
+}
+li.noteListItem .note-time {
+    font-style: italic;
+}
+
+
 .grey-bg {
     /*background-color: #cccccc;*/
 }
@@ -87,3 +98,5 @@ li.noteListItem.selected {
 .note-time {
     float: right;
 }
+
+

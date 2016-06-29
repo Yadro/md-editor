@@ -83,6 +83,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
                     className={'noteListItem' + (e.id === selected ? ' selected' : '')}
                     onClick={this.onSelectNote.bind(this, e.id)}>
                     <span className="note-text">{e.title}</span>
+                    <span className="note-preview">{getPreviewText(e.text)}</span>
                     <span className="note-time">{this._getTimeString(e.createTime)}</span>
                 </li>
             );
@@ -115,6 +116,10 @@ export default class NoteList extends React.Component<NoteListP, any> {
         }
         return moment(time).format('dd DD.MM.YY HH:mm:ss');
     }
+}
+
+function getPreviewText(text: string): string {
+    return ' - ' + text.slice(0, 20);
 }
 
 function itsToday(date: number, now: number) {
