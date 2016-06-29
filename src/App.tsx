@@ -17,6 +17,7 @@ interface AppS {
     notes?: (Note | INoteItem)[];
     currentNote?: boolean;
     noteInstance?: Note;
+    noteModificated?: boolean;
 }
 
 class App extends React.Component<any, AppS> {
@@ -29,7 +30,8 @@ class App extends React.Component<any, AppS> {
             privateMode: false, 
             notes: [],
             currentNote: null,
-            noteInstance: new Note()
+            noteInstance: new Note(),
+            noteModificated: false
         };
         [
             'onSetNote',
@@ -51,18 +53,22 @@ class App extends React.Component<any, AppS> {
      * @param id
      */
     onSetNote(id) {
-        const {noteInstance} = this.state;
+        const {currentNote, noteInstance, noteModificated} = this.state;
+        if (currentNote === id) {
+            return;
+        }
         const note = storage.getById(id);
         console.log('select note id:'+note.id);
 
-        if (noteInstance) {
+        if (noteInstance && noteModificated) {
             console.log('save in storage:'+note.id);
             storage.setById(noteInstance.id, noteInstance);
         }
 
         this.setState({
             currentNote: id,
-            noteInstance: note
+            noteInstance: note,
+            noteModificated: false
         })
     }
 
@@ -74,7 +80,8 @@ class App extends React.Component<any, AppS> {
         storage.exportStorage();
 
         this.setState({
-            noteInstance
+            noteInstance,
+            noteModificated: true
         })
     }
 
@@ -89,6 +96,7 @@ class App extends React.Component<any, AppS> {
         this.setState({
             currentNote: note.id,
             noteInstance: note,
+            noteModificated: true
         })
     }
 
@@ -96,7 +104,8 @@ class App extends React.Component<any, AppS> {
         const note = this.state.noteInstance;
         note.setText(e);
         this.setState({
-            noteInstance: note
+            noteInstance: note,
+            noteModificated: true
         });
 
         if (this.timerId) {
