@@ -1,5 +1,4 @@
-//noinspection TypeScriptCheckImport
-import {EventDispatcher} from './lib/EventDispatcher'
+import {EventDispatcher} from '../lib/EventDispatcher.js'
 import * as _ from 'lodash';
 
 const nameStorage = 'storage';

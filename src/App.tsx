@@ -5,7 +5,7 @@ import './App.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
-import {storage, Note} from "./Storage";
+import {storage, Note} from "./helper/Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
 import Welcome from "./components/Welcome";
