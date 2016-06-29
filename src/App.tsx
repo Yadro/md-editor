@@ -1,6 +1,6 @@
 ///<reference path="../typings/index.d.ts"/>
 
-import '../content/style.css';
+import './App.css';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
