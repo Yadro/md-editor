@@ -5,12 +5,21 @@ import './App.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
-import {storage, Note} from "./helper/Storage";
+import {storage, Note, INoteItem} from "./helper/Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
 import Welcome from "./components/Welcome";
 
-class App extends React.Component<any, any> {
+
+interface AppS {
+    menu?: boolean;
+    privateMode?: boolean;
+    notes?: (Note | INoteItem)[];
+    currentNote?: boolean;
+    noteInstance?: Note;
+}
+
+class App extends React.Component<any, AppS> {
     timerId;
 
     constructor(props) {
@@ -85,6 +94,10 @@ class App extends React.Component<any, any> {
             noteInstance: note
         });
 
+        /**
+         * установка таймера на сохранение заметки
+         * todo переместить логику в storage.setById
+         */
         if (this.timerId) {
             window.clearInterval(this.timerId);
         }

@@ -9,6 +9,7 @@ export interface INoteItem {
     text: string;
     tags: string[];
     createTime: number;
+    editTime: number;
 }
 
 export class Note {
@@ -17,19 +18,24 @@ export class Note {
     text;
     tags: string[];
     createTime: number;
+    editTime: number;
 
     constructor(title?, text?) {
         if (typeof title === "object") {
+            // import existing note
             this.text = title.text;
             this.title = title.title;
             this.id = title.id;
             this.tags = title.tags || [];
             this.createTime = title.createTime || Date.now();
+            this.editTime = title.editTime || this.createTime;
         } else {
+            // create new note
             this.text = text || '';
             this.title = title || '';
             this.tags = [];
             this.createTime = Date.now();
+            this.editTime = this.createTime;
         }
     }
 
@@ -106,10 +112,12 @@ export class Storage {
 
     /**
      * Присваиваем новое значение newValue
+     * сохраняем время изменений
      * @param id
      * @param newValue
      */
-    setById(id, newValue) {
+    setById(id: number, newValue: Note) {
+        newValue.editTime = Date.now();
         this.data = this.data.map(e => {
             if (e.id === id) {
                 return newValue;
