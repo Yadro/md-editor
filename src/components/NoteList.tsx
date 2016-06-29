@@ -1,3 +1,4 @@
+import './NoteList.css';
 import * as React from 'react';
 import {Note} from "../Storage";
 import * as moment from "moment";
@@ -21,7 +22,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             searchWord: '',
             focus: false,
         };
-        
+
         [
             'handleSearch',
             'onFocus',

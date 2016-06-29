@@ -1,0 +1,20 @@
+.react-tagsinput {
+    border-radius: 4px;
+}
+
+.react-tagsinput-tag a::before {
+    content: " x";
+}
+
+.react-tagsinput-tag {
+
+}
+
+/* PRIVATE TAG */
+.private-tag {
+    color: white;
+    background: grey;
+}
+.private-tag a {
+    color: white;
+}

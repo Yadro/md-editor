@@ -1,4 +1,5 @@
 ///<reference path="../../typings/index.d.ts"/>
+import './SimpleMDEWrap.css';
 //noinspection TypeScriptCheckImport
 import * as SimpleMDE from 'simplemde';
 import * as React from 'react';
@@ -52,11 +53,11 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
         this.getChanges = true;
         this.simplemde.codemirror.setValue(nextProps.value);
     }
-    
+
     render() {
         console.log('render');
         return (
-            <textarea id="editor" />
+            <textarea id="editor"/>
         )
     }
 }

@@ -1,0 +1,18 @@
+.CodeMirror {
+    height: 600px !important;
+}
+
+
+.editor-toolbar {
+    margin-top: 5px;
+    background-color: white;
+}
+
+.editor-preview {
+    font-size: 18px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.fa {
+    font-size: 19px;
+}
