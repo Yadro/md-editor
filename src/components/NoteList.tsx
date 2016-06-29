@@ -21,10 +21,13 @@ export default class NoteList extends React.Component<NoteListP, any> {
             searchWord: '',
             focus: false,
         };
-        this.handleSearch = this.handleSearch.bind(this);
-        this.onFocus = this.onFocus.bind(this);
-        this.onBlur = this.onBlur.bind(this);
-        this.listener = this.listener.bind(this);
+        
+        [
+            'handleSearch',
+            'onFocus',
+            'onBlur',
+            'listener',
+        ].forEach((fn) => this[fn] = this[fn].bind(this));
         window.addEventListener('keydown', this.listener);
     }
 
