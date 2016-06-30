@@ -68,7 +68,6 @@ export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> 
     }
 
     render() {
-        console.log('render');
         return (
             <textarea id="editor"/>
         )

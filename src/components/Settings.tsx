@@ -21,7 +21,9 @@ export default class Settings extends React.Component<SelectNotesP, any> {
     }
 
     componentDidMount() {
-        consoleWarn(this, 'componentDidMount');
+        if (config.debug.moduleLife) {
+            consoleWarn(this, 'componentDidMount');
+        }
     }
 
     componentWillUnmount() {

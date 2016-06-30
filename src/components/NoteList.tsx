@@ -43,6 +43,9 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     componentWillReceiveProps(nextProps: NoteListP) {
+        if (config.debug.moduleLife) {
+            consoleWarn(this, 'componentWillReceiveProps')
+        }
         this.setState({
             list: nextProps.notes,
             selected: nextProps.currentNote

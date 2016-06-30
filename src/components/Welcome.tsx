@@ -14,7 +14,6 @@ export default class Welcome extends React.Component<SelectNotesP, any> {
             pswd: 0,
             text: ''
         };
-        console.log(this.props);
     }
 
     componentWillUnmount() {

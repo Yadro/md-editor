@@ -1,8 +1,8 @@
 export var config = {
     debug: {
-        moduleLife: true,
-        unmount: true,
+        moduleLife: false,
+        unmount: false,
         router: false,
-        storage: false
+        storage: true
     }
 };
