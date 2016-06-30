@@ -10,7 +10,8 @@ export default class Welcome extends React.Component<SelectNotesP, any> {
         this.state = {
             pswd: 0,
             text: ''
-        }
+        };
+        console.log(this.props);
     }
 
     onClick() {
