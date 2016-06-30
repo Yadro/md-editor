@@ -44,7 +44,9 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             'onEnter',
             'onStorageUpdate'
         ].forEach(fn => this[fn] = this[fn].bind(this));
-        
+    }
+
+    componentDidMount() {
         storage.addEventListener('update', this.onStorageUpdate);
     }
 

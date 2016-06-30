@@ -32,6 +32,10 @@ export default class NoteList extends React.Component<NoteListP, any> {
             'onBlur',
             'listener',
         ].forEach((fn) => this[fn] = this[fn].bind(this));
+    }
+
+
+    componentDidMount() {
         window.addEventListener('keydown', this.listener);
     }
 
