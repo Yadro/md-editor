@@ -9,7 +9,6 @@
     "moment": "^2.13.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-filtered-multiselect": "^0.4.2",
     "react-tagsinput": "^3.8.1",
     "simplemde": "^1.11.2"
   },
@@ -40,6 +39,7 @@
     "typescript": "^1.8.10",
     "typings": "^1.3.0",
     "vinyl-source-stream": "^1.1.0",
+    "webpack": "^1.13.1",
     "yargs": "^4.7.1"
   },
   "scripts": {

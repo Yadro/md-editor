@@ -1,10 +1,21 @@
 "use strict";
+var webpack = require('webpack');
+var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 
 module.exports = {
 
-  entry: path.join(__dirname, "src", "App.tsx"),
+  entry: {
+    app: path.join(__dirname, "src", "App.tsx"),
+    vendor: [
+      'react',
+      'react-dom',
+      'moment',
+      'simplemde',
+      'react-tagsinput'
+    ]
+  },
   output: {
     path: path.join(__dirname, "build2"),
     filename: 'app.js'
@@ -40,6 +51,12 @@ module.exports = {
   devtool: "source-map",
 
   plugins: [
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      chunks: ['app'],
+      filename: 'vendor.js',
+      minChunks: Infinity
+    }),
     new CopyWebpackPlugin([
       {from: 'index.html'},
       {from: 'content/manifest.json'},
