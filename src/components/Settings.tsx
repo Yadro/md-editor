@@ -20,22 +20,6 @@ export default class Settings extends React.Component<SelectNotesP, any> {
         ].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
-    componentDidMount() {
-        if (config.debug.moduleLife) {
-            consoleWarn(this, 'componentDidMount');
-        }
-    }
-
-    componentWillUnmount() {
-        if (config.debug.unmount) {
-            consoleWarn(this, 'componentWillUnmount');
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.warn('Settings: componentWillReceiveProps');
-    }
-
     onClickCheckbox() {
         this.setState({
             checkbox: !this.state.checkbox

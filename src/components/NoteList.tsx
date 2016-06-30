@@ -36,16 +36,10 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     componentWillUnmount() {
-        if (config.debug.unmount) {
-            consoleWarn(this, 'componentWillUnmount')
-        }
         window.removeEventListener('keydown', this.listener);
     }
 
     componentWillReceiveProps(nextProps: NoteListP) {
-        if (config.debug.moduleLife) {
-            consoleWarn(this, 'componentWillReceiveProps')
-        }
         this.setState({
             list: nextProps.notes,
             selected: nextProps.currentNote

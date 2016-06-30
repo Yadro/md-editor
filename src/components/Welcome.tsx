@@ -16,12 +16,6 @@ export default class Welcome extends React.Component<SelectNotesP, any> {
         };
     }
 
-    componentWillUnmount() {
-        if (config.debug.unmount) {
-            consoleWarn(this, 'componentWillUnmount')
-        }
-    }
-
     onClick() {
         if (this.state.text === '7788') {
             this.props.go('App', {password: this.state.text});

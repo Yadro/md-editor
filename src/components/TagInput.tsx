@@ -2,8 +2,6 @@ import './TagInput.css';
 import * as React from 'react';
 //noinspection TypeScriptCheckImport
 import * as TagsInput from 'react-tagsinput';
-import {config} from "../Config";
-import {consoleWarn} from "../helper/Tools";
 
 interface TagInputP {
     onChangeTags: (tags) => any;
@@ -17,13 +15,7 @@ export default class TagInput extends React.Component<TagInputP, any> {
             tags: props.tags
         }
     }
-
-    componentWillUnmount() {
-        if (config.debug.unmount) {
-            consoleWarn(this, 'componentWillUnmount')
-        }
-    }
-
+    
     componentWillReceiveProps(nextProps: TagInputP) {
         this.setState({
             tags: nextProps.tags
