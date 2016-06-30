@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {SimpleRouterInjProps} from "../lib/SimpleRouter";
+import {consoleWarn} from "../helper/Tools";
+import {config} from "../Config";
 
 interface SelectNotesP extends SimpleRouterInjProps {
     callback: Function;
@@ -19,11 +21,13 @@ export default class Settings extends React.Component<SelectNotesP, any> {
     }
 
     componentDidMount() {
-        console.log('Settings: componentDidMount', this.state);
+        consoleWarn(this, 'componentDidMount');
     }
 
     componentWillUnmount() {
-        console.log('Settings: componentWillUnmount', this.state);
+        if (config.debug.unmount) {
+            consoleWarn(this, 'componentWillUnmount');
+        }
     }
 
     componentWillReceiveProps(nextProps) {

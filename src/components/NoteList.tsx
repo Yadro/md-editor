@@ -2,6 +2,8 @@ import './NoteList.css';
 import * as React from 'react';
 import {Note} from "../helper/Storage";
 import * as moment from "moment";
+import {config} from "../Config";
+import {consoleWarn} from "../helper/Tools";
 
 
 interface NoteListP {
@@ -34,6 +36,9 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     componentWillUnmount() {
+        if (config.debug.unmount) {
+            consoleWarn(this, 'componentWillUnmount')
+        }
         window.removeEventListener('keydown', this.listener);
     }
 

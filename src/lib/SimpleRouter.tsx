@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {config} from "../Config";
 
 interface SimpleRouterP {
     routers?: Object;
-    debug?: boolean;
 }
 
 interface SimpleRouterS {
@@ -71,7 +71,7 @@ export class SimpleRouter extends React.Component<SimpleRouterP, SimpleRouterS> 
         const component = _state.current;
         const props = this.injectGo(_state.sendProps);
         
-        if (this.props.debug) {
+        if (config.debug.router) {
             console.info(`Router '${component.name}' with props:`, props);
         }
         return (

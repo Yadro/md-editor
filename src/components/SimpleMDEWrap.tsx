@@ -3,6 +3,8 @@ import './SimpleMDEWrap.css';
 //noinspection TypeScriptCheckImport
 import * as SimpleMDE from 'simplemde';
 import * as React from 'react';
+import {config} from "../Config";
+import {consoleWarn} from "../helper/Tools";
 
 interface SimpleMDEWrapP {
     value;
@@ -42,7 +44,9 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     }
 
     componentWillUnmount() {
-        console.log('SimpleMDEWrap: componentWillUnmount')
+        if (config.debug.unmount) {
+            consoleWarn(this, 'componentWillUnmount')
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
