@@ -23,7 +23,9 @@ export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> 
     }
 
     componentDidMount() {
-        console.log('SimpleMDEWrap: componentDidMount');
+        if (config.debug.unmount) {
+            consoleWarn(this, 'componentDidMount');
+        }
         this.simplemde = new SimpleMDE({
             element: document.getElementById("editor"),
             spellChecker: false,
@@ -50,7 +52,9 @@ export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> 
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log('SimpleMDEWrap: shouldComponentUpdate');
+        if (false) {
+            console.log('SimpleMDEWrap: shouldComponentUpdate');
+        }
         return false;
     }
 

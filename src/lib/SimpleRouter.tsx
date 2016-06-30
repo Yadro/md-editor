@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {config} from "../Config";
+import {consoleWarn} from "../helper/Tools";
 
 interface SimpleRouterP {
     routers?: Object;
@@ -31,11 +32,15 @@ export class SimpleRouter extends React.Component<SimpleRouterP, SimpleRouterS> 
     }
 
     componentWillMount() {
-        console.warn('SimpleRouter: componentWillMount');
+        if (config.debug.router) {
+            consoleWarn(this, 'componentWillMount');
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        console.warn('SimpleRouter: componentWillReceiveProps');
+        if (config.debug.router) {
+            consoleWarn(this, 'componentWillReceiveProps');
+        }
     }
 
     _go(router: string, params?: Object) {
@@ -66,7 +71,6 @@ export class SimpleRouter extends React.Component<SimpleRouterP, SimpleRouterS> 
 
 
     render() {
-        console.warn('SimpleRouter: render');
         const _state = this.state;
         const component = _state.current;
         const props = this.injectGo(_state.sendProps);
