@@ -41,11 +41,10 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             'newNote',
             'onChangeTags',
             'onEnter',
+            'onStorageUpdate'
         ].forEach(fn => this[fn] = this[fn].bind(this));
         
-        storage.addEventListener('update', () => {
-            this.setState({notes: storage.getAll(this.state.privateMode)});
-        });
+        storage.addEventListener('update', this.onStorageUpdate);
     }
 
     componentWillUnmount() {
@@ -54,6 +53,11 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
         }
         window.clearInterval(this.timerId);
         storage.exportStorage();
+        storage.removeEventListener('update', this.onStorageUpdate);
+    }
+
+    onStorageUpdate() {
+        this.setState({notes: storage.getAll(this.state.privateMode)});
     }
 
     /**
@@ -171,4 +175,4 @@ const routers = {
     Settings: Settings
 };
 
-ReactDOM.render(<SimpleRouter routers={routers} debug/>, document.querySelector('.react'));
+ReactDOM.render(<SimpleRouter routers={routers} />, document.querySelector('.react'));

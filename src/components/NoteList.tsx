@@ -25,6 +25,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             searchWord: '',
             focus: false,
         };
+        console.log(props.list);
 
         [
             'handleSearch',
