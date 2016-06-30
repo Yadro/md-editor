@@ -11,6 +11,8 @@ import TagInput from "./components/TagInput";
 import Welcome from "./components/Welcome";
 import {SimpleRouter, SimpleRouterInjProps} from "./lib/SimpleRouter";
 import Settings from "./components/Settings";
+import {consoleWarn} from "./helper/Tools";
+import {config} from "./Config";
 
 
 interface AppS {
@@ -44,6 +46,14 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
         storage.addEventListener('update', () => {
             this.setState({notes: storage.getAll(this.state.privateMode)});
         });
+    }
+
+    componentWillUnmount() {
+        if (config.debug.unmount) {
+            consoleWarn(this, 'componentWillUnmount');
+        }
+        window.clearInterval(this.timerId);
+        storage.exportStorage();
     }
 
     /**
