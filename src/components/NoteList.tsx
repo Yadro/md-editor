@@ -6,6 +6,9 @@ import {config} from "../Config";
 import {consoleWarn} from "../helper/Tools";
 
 
+const keyCodeEnter = 13;
+const keyCodesDel = [8, 46];
+
 interface NoteListP {
     notes;
     onSetNote: (id) => any;
@@ -36,11 +39,11 @@ export default class NoteList extends React.Component<NoteListP, any> {
 
 
     componentDidMount() {
-        window.addEventListener('keydown', this.listener);
+        window.addEventListener('keyup', this.listener);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('keydown', this.listener);
+        window.removeEventListener('keyup', this.listener);
     }
 
     componentWillReceiveProps(nextProps: NoteListP) {
@@ -55,12 +58,15 @@ export default class NoteList extends React.Component<NoteListP, any> {
      * @param e
      */
     listener(e) {
-        if (e.keyCode === 13 && this.state.searchFocus) {
+        if (e.keyCode === keyCodeEnter && this.state.searchFocus) {
             // press enter
             this.props.onNewNote(this.state.searchWord);
             this.setState({
                 searchWord: ''
             });
+        } else if (keyCodesDel.indexOf(e.keyCode) !== -1 && !this.state.searchFocus) {
+            // todo remove note in storage
+            console.log((`Remove note id:${this.state.selected}`));
         }
     }
 
