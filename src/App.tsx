@@ -28,9 +28,10 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
 
     constructor(props) {
         super(props);
+        let privateMode = false;
         this.state = {
-            privateMode: false, 
-            notes: [],
+            privateMode: privateMode,
+            notes: storage.getAll(privateMode),
             currentNote: null,
             noteInstance: new Note(),
             noteModificated: false
