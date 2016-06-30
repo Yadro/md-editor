@@ -10,10 +10,10 @@ export default class Settings extends React.Component<SelectNotesP, any> {
     constructor(props) {
         super(props);
         this.state = {
-            date: null
+            checkbox: false
         };
         [
-            'onClickSetState',
+            'onClickCheckbox',
             'onGoBack',
         ].forEach(fn => this[fn] = this[fn].bind(this));
     }
@@ -30,9 +30,9 @@ export default class Settings extends React.Component<SelectNotesP, any> {
         console.warn('Settings: componentWillReceiveProps');
     }
 
-    onClickSetState() {
+    onClickCheckbox() {
         this.setState({
-            date: new Date()
+            checkbox: !this.state.checkbox
         })
     }
 
@@ -45,7 +45,7 @@ export default class Settings extends React.Component<SelectNotesP, any> {
             <div>
                 <h2>settings</h2>
                 <div>
-                    <button onClick={this.onClickSetState}>setState</button>
+                    <input type="checkbox" onChange={this.onClickCheckbox} value={this.state.checkbox}/>
                     <button onClick={this.onGoBack}>back</button>
                 </div>
             </div>
