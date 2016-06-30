@@ -1,5 +1,6 @@
 import {EventDispatcher} from '../lib/EventDispatcher.js'
 import * as _ from 'lodash';
+import {config} from "../Config";
 
 const nameStorage = 'storage';
 
@@ -66,7 +67,9 @@ export class Storage {
     constructor() {
         this.importStorage((items) => {
             this.data = items || this.data || [];
-            console.log('load from localstorage', items, this.data);
+            if (config.debug.storage) {
+                console.log('load from localstorage', items, this.data);
+            }
             this.dispatchEvent({type: 'update'});
         });
     }
@@ -149,7 +152,9 @@ export class Storage {
     }
 
     exportStorage() {
-        console.log('save to localstorage', this.data);
+        if (config.debug.storage) {
+            console.log('save to localstorage', this.data);
+        }
         chrome.storage.local.set({storage: this.data});
     }
 }
