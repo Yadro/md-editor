@@ -23,7 +23,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             list: props.notes,
             selected: null,
             searchWord: '',
-            focus: false,
+            searchFocus: false,
         };
 
         [
@@ -55,7 +55,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
      * @param e
      */
     listener(e) {
-        if (e.keyCode === 13 && this.state.focus) {
+        if (e.keyCode === 13 && this.state.searchFocus) {
             // press enter
             this.props.onNewNote(this.state.searchWord);
             this.setState({
@@ -79,11 +79,11 @@ export default class NoteList extends React.Component<NoteListP, any> {
     }
 
     onFocus() {
-        this.setState({focus: true});
+        this.setState({searchFocus: true});
     }
 
     onBlur() {
-        this.setState({focus: false});
+        this.setState({searchFocus: false});
     }
 
     renderNoteList(list: Array) {
