@@ -11,6 +11,10 @@ interface SimpleRouterS {
     sendProps?: Object;
 }
 
+export interface SimpleRouterInjProps {
+    go: (router: string, params?: Object) => any;
+}
+
 export class SimpleRouter extends React.Component<SimpleRouterP, SimpleRouterS> {
 
     constructor(props) {
@@ -24,6 +28,14 @@ export class SimpleRouter extends React.Component<SimpleRouterP, SimpleRouterS> 
             '_go',
             'injectGo'
         ].forEach(fn => this[fn] = this[fn].bind(this));
+    }
+
+    componentWillMount() {
+        console.warn('SimpleRouter: componentWillMount');
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.warn('SimpleRouter: componentWillReceiveProps');
     }
 
     _go(router: string, params?: Object) {
@@ -54,6 +66,7 @@ export class SimpleRouter extends React.Component<SimpleRouterP, SimpleRouterS> 
 
 
     render() {
+        console.warn('SimpleRouter: render');
         const _state = this.state;
         const component = _state.current;
         const props = this.injectGo(_state.sendProps);

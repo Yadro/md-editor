@@ -9,11 +9,11 @@ import {storage, Note, INoteItem} from "./helper/Storage";
 import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
 import Welcome from "./components/Welcome";
-import {SimpleRouter} from "./lib/SimpleRouter";
+import {SimpleRouter, SimpleRouterInjProps} from "./lib/SimpleRouter";
+import Settings from "./components/Settings";
 
 
 interface AppS {
-    menu?: boolean;
     privateMode?: boolean;
     notes?: (Note | INoteItem)[];
     currentNote?: boolean;
@@ -21,13 +21,12 @@ interface AppS {
     noteModificated?: boolean;
 }
 
-class App extends React.Component<any, AppS> {
+class App extends React.Component<SimpleRouterInjProps, AppS> {
     timerId;
 
     constructor(props) {
         super(props);
         this.state = {
-            menu: false,
             privateMode: false, 
             notes: [],
             currentNote: null,
@@ -132,9 +131,6 @@ class App extends React.Component<any, AppS> {
     
     render() {
         const {noteInstance, privateMode, notes, currentNote} = this.state;
-        if (this.state.menu) {
-            return <Welcome callback={this.onEnter}/>
-        }
         return (
             <div className={privateMode ? 'grey-bg' : ''}>
                 <NoteList
@@ -149,55 +145,17 @@ class App extends React.Component<any, AppS> {
                     onChange={this.onInputEditor}
                     currentNote={currentNote}
                 />
-            </div>
-        )
-    }
-}
-
-class Main extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-    }
-
-    go() {
-        this.props.go('greater', {sendParams: 'sendParams'});
-    }
-    
-    render() {
-        return (
-            <div>
-                <div>Hello</div>
-                <span>{this.props.greater}</span>
-                <button onClick={this.go.bind(this)}>go to</button>
-            </div>
-        )
-    }
-}
-
-class Greater extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-    }
-
-    go() {
-        this.props.go('home', {greater: 'greater'});
-    }
-
-    render() {
-        return (
-            <div>
-                <div>Grater</div>
-                <span>{this.props.sendParams}</span>
-                <button onClick={this.go.bind(this)}>go back</button>
+                <button onClick={this.props.go.bind(this, 'Settings', {})}>settings</button>
             </div>
         )
     }
 }
 
 const routers = {
-    index: Main,
-    home: Main,
-    greater: Greater
+    index: Welcome,
+    Welcome: Welcome,
+    App: App,
+    Settings: Settings
 };
 
 ReactDOM.render(<SimpleRouter routers={routers} debug/>, document.querySelector('.react'));

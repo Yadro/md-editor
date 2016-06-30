@@ -21,7 +21,7 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
+        console.log('SimpleMDEWrap: componentDidMount');
         this.simplemde = new SimpleMDE({
             element: document.getElementById("editor"),
             spellChecker: false,
@@ -41,7 +41,12 @@ export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
         });
     }
 
+    componentWillUnmount() {
+        console.log('SimpleMDEWrap: componentWillUnmount')
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
+        console.log('SimpleMDEWrap: shouldComponentUpdate');
         return false;
     }
 

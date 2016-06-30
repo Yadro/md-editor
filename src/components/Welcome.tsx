@@ -1,6 +1,7 @@
 import * as React from 'react';
+import {SimpleRouterInjProps} from "../lib/SimpleRouter";
 
-interface SelectNotesP {
+interface SelectNotesP extends SimpleRouterInjProps {
     callback: Function;
 }
 
@@ -16,10 +17,10 @@ export default class Welcome extends React.Component<SelectNotesP, any> {
 
     onClick() {
         if (this.state.text === '7788') {
-            this.props.callback(2);
-            return;
+            this.props.go('App', {password: this.state.text});
+        } else {
+            this.props.go('App');
         }
-        this.props.callback(1);
     }
 
     render() {
