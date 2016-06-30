@@ -33,10 +33,10 @@ export default class Settings extends React.Component<SelectNotesP, any> {
     render() {
         return (
             <div>
-                <h2>settings</h2>
+                <button onClick={this.onGoBack}>{'<-'}</button>
+                <span><b>Settings</b></span>
                 <div>
                     <input type="checkbox" onChange={this.onClickCheckbox} value={this.state.checkbox}/>
-                    <button onClick={this.onGoBack}>back</button>
                 </div>
             </div>
         )
