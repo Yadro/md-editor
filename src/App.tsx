@@ -5,12 +5,12 @@ import './App.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import NoteList from './components/NoteList';
-import {storage, Note, INoteItem} from "./helper/Storage";
-import {SimpleMDEWrap} from "./components/SimpleMDEWrap";
+import SimpleMDEWrap from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
 import Welcome from "./components/Welcome";
-import {SimpleRouter, SimpleRouterInjProps} from "./lib/SimpleRouter";
 import Settings from "./components/Settings";
+import {SimpleRouter, SimpleRouterInjProps} from "./lib/SimpleRouter";
+import {storage, Note, INoteItem} from "./helper/Storage";
 import {consoleWarn} from "./helper/Tools";
 import {config} from "./Config";
 

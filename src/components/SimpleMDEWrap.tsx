@@ -12,7 +12,7 @@ interface SimpleMDEWrapP {
     onChange: (text: string) => any;
 }
 
-export class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
+export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> {
     simplemde;
     getChanges = false;
     currentNote;
