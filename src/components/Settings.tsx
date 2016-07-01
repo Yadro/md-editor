@@ -1,3 +1,5 @@
+import './Settings.css';
+
 import * as React from 'react';
 import {SimpleRouterInjProps} from "../lib/SimpleRouter";
 import {consoleWarn} from "../helper/Tools";
@@ -76,14 +78,14 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
 
     render() {
         return (
-            <div>
+            <div className="settings">
                 <button onClick={this.onGoBack}>{'<-'}</button>
                 <span><b>Settings</b></span>
-                <ul>
-                    <b>Sorting:</b>
-                    {this.radioBox(sortData, 'sortType')}
-                </ul>
-                <div>
+                <div className="settings-list"> 
+                    <ul>
+                        <b>Sorting:</b>
+                        {this.radioBox(sortData, 'sortType')}
+                    </ul>
                     <input type="checkbox" onChange={this.onClickCheckbox} value={this.state.checkbox}/>
                 </div>
             </div>

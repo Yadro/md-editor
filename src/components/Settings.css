@@ -1,0 +1,11 @@
+
+.settings ul {
+    padding-left: 0;
+}
+.settings li {
+    list-style: none;
+}
+
+.settings-list {
+    margin-left: 20px;
+}
