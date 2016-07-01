@@ -1,4 +1,4 @@
-import './Settings.css';
+import '../../style/components/Settings.css';
 
 import * as React from 'react';
 import {SimpleRouterInjProps} from "../lib/SimpleRouter";

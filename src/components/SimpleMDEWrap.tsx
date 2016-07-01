@@ -1,5 +1,5 @@
 ///<reference path="../../typings/index.d.ts"/>
-import './SimpleMDEWrap.css';
+import '../../style/components/SimpleMDEWrap.css';
 //noinspection TypeScriptCheckImport
 import * as SimpleMDE from 'simplemde';
 import * as React from 'react';

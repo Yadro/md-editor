@@ -1,4 +1,4 @@
-import './TagInput.css';
+import '../../style/components/TagInput.css';
 import * as React from 'react';
 //noinspection TypeScriptCheckImport
 import * as TagsInput from 'react-tagsinput';

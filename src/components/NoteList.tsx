@@ -1,4 +1,4 @@
-import './NoteList.css';
+import '../../style/components/NoteList.css';
 import * as React from 'react';
 import {Note, storage, Hash, ISettings} from "../helper/Storage";
 import * as moment from "moment";
