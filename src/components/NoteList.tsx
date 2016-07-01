@@ -27,6 +27,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             selected: null,
             searchWord: '',
             searchFocus: false,
+            notesFocus: false,
         };
 
         [
@@ -64,7 +65,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             this.setState({
                 searchWord: ''
             });
-        } else if (keyCodesDel.indexOf(e.keyCode) !== -1 && !this.state.searchFocus) {
+        } else if (keyCodesDel.indexOf(e.keyCode) !== -1 && this.state.notesFocus) {
             // todo remove note in storage
             console.log((`Remove note id:${this.state.selected}`));
         }
