@@ -14,6 +14,7 @@ import {SimpleRouter, SimpleRouterInjProps} from "./lib/SimpleRouter";
 import {storage, Note, INoteItem, Hash} from "./helper/Storage";
 import {consoleWarn} from "./helper/Tools";
 import {config} from "./Config";
+import WrapEditor from "./editor/Editor";
 
 
 interface AppS {
@@ -179,7 +180,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
                     onNewNote={this.newNote}
                 />
                 <TagInput tags={noteInstance.tags} onChangeTags={this.onChangeTags}/>
-                <SimpleMDEWrap
+                <WrapEditor
                     value={noteInstance.text}
                     onChange={this.onInputEditor}
                     currentNote={currentNote}

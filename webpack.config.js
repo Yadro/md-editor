@@ -13,7 +13,8 @@ module.exports = {
       'react-dom',
       'moment',
       'simplemde',
-      'react-tagsinput'
+      'react-tagsinput',
+      'draft-js'
     ]
   },
   output: {

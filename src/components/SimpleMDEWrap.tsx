@@ -26,15 +26,17 @@ export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> 
         if (config.debug.unmount) {
             consoleWarn(this, 'componentDidMount');
         }
+
         this.simplemde = new SimpleMDE({
             element: document.getElementById("editor"),
             spellChecker: false,
             autoDownloadFontAwesome: false,
             toolbar: [
                 "bold", "italic", "heading",
-                "|", "quote", 'link', 'image', 'table',
+                "|", "quote", 'unordered-list', 'ordered-list',
+                '|', 'link', 'image', 'table',
                 '|', 'code',
-                '|', 'preview', 'side-by-side'
+                '|', 'preview',
             ],
         });
         // this.simplemde.codemirror.setOption('viewportMargin', Infinity);
