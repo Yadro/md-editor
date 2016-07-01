@@ -3,6 +3,6 @@ export var config = {
         moduleLife: false,
         unmount: false,
         router: false,
-        storage: false
+        storage: false,
     }
 };

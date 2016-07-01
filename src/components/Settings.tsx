@@ -4,23 +4,39 @@ import * as React from 'react';
 import {SimpleRouterInjProps} from "../lib/SimpleRouter";
 import {consoleWarn} from "../helper/Tools";
 import {config} from "../Config";
+import {storage} from "../helper/Storage";
 
 const SortNotes = {
     create: 'create',
     edit: 'edit'
 };
 
-interface SortDataItem {
+const ThemeType = {
+    light: 'light',
+    dark: 'dark'
+};
+
+interface RadioButtonItem {
     text;
     value;
 }
-const sortData: SortDataItem[] = [
+const RadioSort: RadioButtonItem[] = [
     {
         text: 'create date',
         value: SortNotes.create
     }, {
         text: 'edit date',
         value: SortNotes.edit
+    }
+];
+
+const RadioTheme: RadioButtonItem[] = [
+    {
+        text: 'Light',
+        value: ThemeType.light
+    }, {
+        text: 'Dark',
+        value: ThemeType.dark
     }
 ];
 
@@ -31,6 +47,7 @@ interface SelectNotesP extends SimpleRouterInjProps {
 interface SelectNotesS {
     checkbox?;
     sortType?;
+    settings?;
 }
 
 export default class Settings extends React.Component<SelectNotesP, SelectNotesS> {
@@ -39,7 +56,7 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
         super(props);
         this.state = {
             checkbox: false,
-            sortType: props.sortType || null
+            settings: storage.getSettings()
         };
         [
             'onClickCheckbox',
@@ -55,21 +72,22 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
     }
 
     onGoBack() {
-        this.props.go('App', {sortType: this.state.sortType});
+        storage.setSettings(this.state.settings);
+        this.props.go('App', {});
     }
 
     setRadioValue(field: string, value: any) {
-        const obj = {};
-        obj[field] = value;
-        this.setState(obj);
+        const {settings} = this.state;
+        settings[field] = value;
+        this.setState({settings: settings});
     }
 
-    radioBox(variants: SortDataItem[], field: string) {
-        const sortType = this.state.sortType;
+    radioBox(variants: RadioButtonItem[], field: string) {
+        const current = this.state.settings[field];
         return variants.map((el, key) => {
             return (
                 <li key={key} onClick={this.setRadioValue.bind(null, field, el.value)}>
-                    <input type="radio" checked={sortType === el.value}/>
+                    <input type="radio" checked={current === el.value}/>
                     <label>{el.text}</label>
                 </li>
             )
@@ -84,7 +102,11 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
                 <div className="settings-list"> 
                     <ul>
                         <b>Sorting:</b>
-                        {this.radioBox(sortData, 'sortType')}
+                        {this.radioBox(RadioSort, 'sort')}
+                    </ul>
+                    <ul>
+                        <b>Theme:</b>
+                        {this.radioBox(RadioTheme, 'theme')}
                     </ul>
                     <input type="checkbox" onChange={this.onClickCheckbox} value={this.state.checkbox}/>
                 </div>

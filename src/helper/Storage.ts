@@ -55,7 +55,9 @@ export class Note {
 }
 
 export interface ISettings {
-    sortNotes?;
+    sort;
+    fontSize;
+    theme;
 }
 
 export class Storage {
@@ -68,18 +70,18 @@ export class Storage {
     notes: INoteItem[] = [];
     tags: string[]; // not usage
     settings: ISettings = {
-        sortNotes: null,
+        sort: null,
         fontSize: null,
         theme: null
     };
 
     constructor() {
         localStorage.get((items: any) => {
-            if (config.debug.storage) {
-                console.log('LocalStorage: get items = ', items);
-            }
             this.notes = items.notes || [];
             this.settings = <ISettings>items.settings || this.settings;
+            if (config.debug.storage) {
+                console.log('LocalStorage: set date | <Storage>this = ', this);
+            }
             this.dispatchEvent({type: 'update'});
         });
     }
@@ -151,14 +153,27 @@ export class Storage {
         this.setById(id, newValue);
     }
 
-    exportStorage() {
+    getSettings(): ISettings {
+        return this.settings;
+    }
+
+    setSettings(settings: ISettings) {
         if (config.debug.storage) {
-            console.log('Storage: save to LocalStorage', this.notes);
+            console.log(settings);
         }
-        localStorage.set({
+        this.settings = settings;
+        this.exportStorage();
+    }
+
+    exportStorage() {
+        const obj = {
             notes: this.notes,
             settings: this.settings
-        });
+        };
+        if (config.debug.storage) {
+            console.log('Storage: save to LocalStorage ', obj);
+        }
+        localStorage.set(obj);
     }
 }
 EventDispatcher.prototype.apply(Storage.prototype);
