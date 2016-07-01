@@ -54,8 +54,8 @@ export class Note {
     }
 }
 
-interface ISettings {
-    sortNotes;
+export interface ISettings {
+    sortNotes?;
 }
 
 export class Storage {
@@ -67,11 +67,19 @@ export class Storage {
 
     notes: INoteItem[] = [];
     tags: string[]; // not usage
-    settings: ISettings;
+    settings: ISettings = {
+        sortNotes: null,
+        fontSize: null,
+        theme: null
+    };
 
     constructor() {
-        this.importStorage((items) => {
-            this.notes = items || this.notes || [];
+        localStorage.get((items: any) => {
+            if (config.debug.storage) {
+                console.log('LocalStorage: get items = ', items);
+            }
+            this.notes = items.notes || [];
+            this.settings = <ISettings>items.settings || this.settings;
             this.dispatchEvent({type: 'update'});
         });
     }
@@ -143,39 +151,14 @@ export class Storage {
         this.setById(id, newValue);
     }
 
-    /*
-    if (config.debug.storage) {
-     console.log('Storage: import storage', storage);
-    }
-     */
-    importStorage(callback: (data: INoteItem[]) => any) {
-        chrome.storage.local.get('storage', (data: any) => {
-            const storage = data.storage;
-            if (storage != null) {
-                if (isArray(storage)) {
-                    if (config.debug.storage) {
-                        console.log('Storage: import storage', storage);
-                    }
-                    callback(storage);
-                } else {
-                    console.error('Storage: fail to load storage. Data:', data);
-                }
-            }
-        });
-
-        /*localStorageGet('storage', (storage) => {
-            localStorageGet('settings', () => {
-                callback();
-            });
-        });
-        return;*/
-    }
-
     exportStorage() {
         if (config.debug.storage) {
             console.log('Storage: save to LocalStorage', this.notes);
         }
-        chrome.storage.local.set({storage: this.notes});
+        localStorage.set({
+            notes: this.notes,
+            settings: this.settings
+        });
     }
 }
 EventDispatcher.prototype.apply(Storage.prototype);
@@ -187,14 +170,4 @@ export function isArray(o: any) {
 
 export function copyObject<T>(jsonObject: T): T {
     return JSON.parse(JSON.stringify(jsonObject));
-}
-
-function localStorageGet(field: string, back: (data) => void) {
-    localStorage.get(field, (items) => {
-        if (items[field] != null) {
-            back(items[field]);
-        } else {
-            console.error(`LocalStorage: fail to get '${field}'`);
-        }
-    })
 }
