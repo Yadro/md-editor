@@ -40,6 +40,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             'openNote',
             'onInputEditor',
             'newNote',
+            'saveNote',
             'onChangeTags',
             'onEnter',
             'onStorageUpdate',
@@ -55,10 +56,8 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
     componentWillUnmount() {
         storage.removeEventListener('update', this.onStorageUpdate);
         storage.removeEventListener('remove', this.onStorageRemove);
-        if (config.debug.unmount) {
-            consoleWarn(this, 'componentWillUnmount');
-        }
         window.clearInterval(this.timerId);
+        this.saveNote();
         storage.exportStorage();
     }
 
@@ -83,23 +82,26 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
      * @param id
      */
     openNote(id) {
-        const {currentNote, noteInstance, noteModificated} = this.state;
-        if (currentNote === id) {
+        if (this.state.currentNote === id) {
             return;
         }
         const note = storage.getById(id);
         console.log('select note id:'+note.id);
 
-        if (noteInstance && noteModificated) {
-            console.log('save in storage:'+note.id);
-            storage.setById(noteInstance.id, noteInstance);
-        }
+        this.saveNote();
 
         this.setState({
             currentNote: id,
             noteInstance: note,
             noteModificated: false
         })
+    }
+
+    saveNote() {
+        const {noteInstance, noteModificated} = this.state;
+        if (noteInstance && noteModificated) {
+            storage.setByIdSaveDate(noteInstance.id, noteInstance);
+        }
     }
 
     onChangeTags(tags) {
