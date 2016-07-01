@@ -1,10 +1,11 @@
 import './NoteList.css';
 import * as React from 'react';
-import {Note, storage, Hash} from "../helper/Storage";
+import {Note, storage, Hash, ISettings} from "../helper/Storage";
 import * as moment from "moment";
 import {config} from "../Config";
 import {consoleWarn} from "../helper/Tools";
 import SyntheticEvent = __React.SyntheticEvent;
+import {SortNotes} from "./Settings";
 
 
 const keyCodeEnter = 13;
@@ -17,7 +18,15 @@ interface NoteListP {
     currentNote: Hash;
 }
 
-export default class NoteList extends React.Component<NoteListP, any> {
+interface NoteListS {
+    list?;
+    selected?;
+    searchWord?;
+    searchFocus?;
+    settings?: ISettings;
+}
+
+export default class NoteList extends React.Component<NoteListP, NoteListS> {
 
     now: moment.Moment;
 
@@ -103,7 +112,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
                     onClick={this.onSelectNote.bind(this, note.id)}>
                     <span className="note-text">{note.title}</span>
                     <span className="note-preview">{getPreviewText(note.text)}</span>
-                    <span className="note-time">{this._getTimeString(note.createTime)}</span>
+                    <span className="note-time">{this._getTimeString(note)}</span>
                 </li>
             );
         });
@@ -129,11 +138,17 @@ export default class NoteList extends React.Component<NoteListP, any> {
         )
     }
 
-    _getTimeString(time: number): string {
-        if (itsTodayTime(time, this.now)) {
-            return 'today at ' + moment(time).format('HH:mm:ss')
+    _getTimeString(note: Note): string {
+        let prefix = '';
+        const sort = this.state.settings.sort;
+        const time = (sort === SortNotes.create) ? note.createTime : note.editTime ;
+        if (sort === SortNotes.edit) {
+            prefix = 'edit ';
         }
-        return moment(time).format('dd DD.MM HH:mm');
+        if (itsTodayTime(time, this.now)) {
+            return prefix + moment(time).format('HH:mm')
+        }
+        return prefix + moment(time).format('dd DD.MM');
     }
 
     _getTimeStringPrefix(note: Note): string {

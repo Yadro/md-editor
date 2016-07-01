@@ -6,7 +6,7 @@ import {consoleWarn} from "../helper/Tools";
 import {config} from "../Config";
 import {storage} from "../helper/Storage";
 
-const SortNotes = {
+export const SortNotes = {
     create: 'create',
     edit: 'edit'
 };
