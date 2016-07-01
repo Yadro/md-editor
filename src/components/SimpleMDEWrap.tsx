@@ -30,8 +30,12 @@ export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> 
             element: document.getElementById("editor"),
             spellChecker: false,
             autoDownloadFontAwesome: false,
-            toolbar: ["bold", "italic", "heading", "|", "quote", 'link', 'image', 'table', '|', 'code',
-            '|', 'preview', 'side-by-side'],
+            toolbar: [
+                "bold", "italic", "heading",
+                "|", "quote", 'link', 'image', 'table',
+                '|', 'code',
+                '|', 'preview', 'side-by-side'
+            ],
         });
         // this.simplemde.codemirror.setOption('viewportMargin', Infinity);
 
@@ -52,9 +56,6 @@ export default class SimpleMDEWrap extends React.Component<SimpleMDEWrapP, any> 
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (false) {
-            console.log('SimpleMDEWrap: shouldComponentUpdate');
-        }
         return false;
     }
 
