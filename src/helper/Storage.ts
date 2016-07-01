@@ -56,6 +56,10 @@ export class Note {
     }
 }
 
+export const SortNotes = {
+    create: 'create',
+    edit: 'edit'
+};
 export interface ISettings {
     sort;
     fontSize;
@@ -118,9 +122,12 @@ export class Storage {
 
     getAll(privateMode: boolean) {
         if (privateMode) {
-            return sort(this.notes);
+            return sort(this.notes, this.settings.sort);
         } else {
-            return sort(this.notes.filter((item) => item.tags.indexOf('private') === -1));
+            return sort(
+                this.notes.filter((item) => item.tags.indexOf('private') === -1),
+                this.settings.sort
+            );
         }
     }
 
@@ -205,8 +212,13 @@ export function makeHash(): Hash {
     return text;
 }
 
-function sort(items: (Note|INoteItem)[], field?: 'createTime' | 'editTime') {
+const sortField = {
+    'create': 'createTime',
+    'edit': 'editTime'
+};
+function sort(items: (Note|INoteItem)[], field) {
+    var p = sortField[field];
     return items.sort((a, b) => {
-        return a.createTime < b.createTime ? 1 : (a.createTime === b.createTime ? 0 : -1);
+        return a[p] < b[p] ? 1 : (a[p] === b[p] ? 0 : -1);
     })
 }

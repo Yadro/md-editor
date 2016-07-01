@@ -5,7 +5,7 @@ import * as moment from "moment";
 import {config} from "../Config";
 import {consoleWarn} from "../helper/Tools";
 import SyntheticEvent = __React.SyntheticEvent;
-import {SortNotes} from "./Settings";
+import {SortNotes} from "../helper/Storage";
 
 
 const keyCodeEnter = 13;

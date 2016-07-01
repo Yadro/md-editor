@@ -4,12 +4,7 @@ import * as React from 'react';
 import {SimpleRouterInjProps} from "../lib/SimpleRouter";
 import {consoleWarn} from "../helper/Tools";
 import {config} from "../Config";
-import {storage} from "../helper/Storage";
-
-export const SortNotes = {
-    create: 'create',
-    edit: 'edit'
-};
+import {storage, SortNotes} from "../helper/Storage";
 
 const ThemeType = {
     light: 'light',
