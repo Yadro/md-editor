@@ -109,10 +109,6 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
      */
     newNote(title) {
         const note = storage.add(new Note(title, 'text'));
-        if (config.debug.storage) {
-            console.log(note);
-            console.log(this);
-        }
         this.setState({
             currentNote: note.id,
             noteInstance: note,
