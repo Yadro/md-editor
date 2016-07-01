@@ -1,13 +1,14 @@
 import './NoteList.css';
 import * as React from 'react';
-import {Note} from "../helper/Storage";
+import {Note, storage} from "../helper/Storage";
 import * as moment from "moment";
 import {config} from "../Config";
 import {consoleWarn} from "../helper/Tools";
+import SyntheticEvent = __React.SyntheticEvent;
 
 
 const keyCodeEnter = 13;
-const keyCodesDel = [8, 46];
+const keyCodesDel = 46;
 
 interface NoteListP {
     notes;
@@ -27,13 +28,13 @@ export default class NoteList extends React.Component<NoteListP, any> {
             selected: null,
             searchWord: '',
             searchFocus: false,
-            notesFocus: false,
+            settings: storage.getSettings()
         };
 
         [
             'handleSearch',
-            'onFocus',
-            'onBlur',
+            'onSearchFocus',
+            'onSearchBlur',
             'listener',
         ].forEach((fn) => this[fn] = this[fn].bind(this));
     }
@@ -58,14 +59,14 @@ export default class NoteList extends React.Component<NoteListP, any> {
      * Вызываем onNewNote если input в фокусе и нажат enter
      * @param e
      */
-    listener(e) {
+    listener(e: KeyboardEvent) {
         if (e.keyCode === keyCodeEnter && this.state.searchFocus) {
             // press enter
             this.props.onNewNote(this.state.searchWord);
             this.setState({
                 searchWord: ''
             });
-        } else if (keyCodesDel.indexOf(e.keyCode) !== -1 && this.state.notesFocus) {
+        } else if ((e.metaKey || e.ctrlKey) && e.keyCode === keyCodesDel) {
             // todo remove note in storage
             console.log((`Remove note id:${this.state.selected}`));
         }
@@ -85,11 +86,11 @@ export default class NoteList extends React.Component<NoteListP, any> {
         })
     }
 
-    onFocus() {
+    onSearchFocus() {
         this.setState({searchFocus: true});
     }
 
-    onBlur() {
+    onSearchBlur() {
         this.setState({searchFocus: false});
     }
 
@@ -123,7 +124,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
             this.state.list;
         return (
             <div className="noteList">
-                <input type="text" onChange={this.handleSearch} onFocus={this.onFocus} onBlur={this.onBlur}/>
+                <input type="text" onChange={this.handleSearch} onFocus={this.onSearchFocus} onBlur={this.onSearchBlur}/>
                 {this.renderNoteList(list)}
             </div>
         )
