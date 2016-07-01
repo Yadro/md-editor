@@ -5,8 +5,9 @@ const localStorage = chrome.storage.local;
 
 const nameStorage = 'storage';
 
+export type Hash = string;
 export interface INoteItem {
-    id?: number;
+    id?: Hash;
     title: string;
     text: string;
     tags: string[];
@@ -15,7 +16,7 @@ export interface INoteItem {
 }
 
 export class Note {
-    id: number;
+    id: Hash;
     title;
     text;
     tags: string[];
@@ -87,8 +88,8 @@ export class Storage {
         });
     }
 
-    add(item: INoteItem) {
-        item.id = this.notes.length;
+    add(item: Note) {
+        item.id = makeHash();
         this.notes.push(item);
         this.dispatchEvent({type: 'update'});
         this.exportStorage();
@@ -136,7 +137,7 @@ export class Storage {
      * @param id
      * @param newValue
      */
-    setById(id: number, newValue: Note) {
+    setById(id: Hash, newValue: Note) {
         newValue.editTime = Date.now();
         this.notes = this.notes.map(e => {
             if (e.id === id) {
@@ -153,7 +154,7 @@ export class Storage {
      * @param id
      * @param newValue
      */
-    setByIdSaveDate(id: number, newValue: Note) {
+    setByIdSaveDate(id: Hash, newValue: Note) {
         newValue.editTime = Date.now();
         this.setById(id, newValue);
     }
@@ -190,4 +191,13 @@ export function isArray(o: any) {
 
 export function copyObject<T>(jsonObject: T): T {
     return JSON.parse(JSON.stringify(jsonObject));
+}
+
+export function makeHash(): Hash {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 21; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }

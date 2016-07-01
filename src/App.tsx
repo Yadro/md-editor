@@ -10,16 +10,16 @@ import TagInput from "./components/TagInput";
 import Welcome from "./components/Welcome";
 import Settings from "./components/Settings";
 import {SimpleRouter, SimpleRouterInjProps} from "./lib/SimpleRouter";
-import {storage, Note, INoteItem} from "./helper/Storage";
+import {storage, Note, INoteItem, Hash} from "./helper/Storage";
 import {consoleWarn} from "./helper/Tools";
 import {config} from "./Config";
 
 
 interface AppS {
     privateMode?: boolean;
-    notes?: (Note | INoteItem)[];
-    currentNote?: number;
-    noteInstance?: (Note | INoteItem);
+    notes?: (Note)[];
+    currentNote?: Hash;
+    noteInstance?: (Note);
     noteModificated?: boolean;
 }
 

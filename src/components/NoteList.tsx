@@ -1,6 +1,6 @@
 import './NoteList.css';
 import * as React from 'react';
-import {Note, storage} from "../helper/Storage";
+import {Note, storage, Hash} from "../helper/Storage";
 import * as moment from "moment";
 import {config} from "../Config";
 import {consoleWarn} from "../helper/Tools";
@@ -14,7 +14,7 @@ interface NoteListP {
     notes;
     onSetNote: (id) => any;
     onNewNote: (title: string) => any;
-    currentNote: number;
+    currentNote: Hash;
 }
 
 export default class NoteList extends React.Component<NoteListP, any> {
