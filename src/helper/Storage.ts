@@ -84,13 +84,13 @@ export class Storage {
         let objects = this.data.filter(o => o.id == id);
         if (!objects.length) {
             debugger;
-            throw new Error('elem not found');
+            console.error('Storage: elem not found id:', id);
         }
         let item = objects[0];
         let idInArr = this.data.indexOf(item);
         if (idInArr === -1) {
             debugger;
-            throw new Error('id not found');
+            console.error('Storage: id not found id:', id);
         }
         this.data.splice(idInArr, 1);
         this.dispatchEvent({type: 'update'});
