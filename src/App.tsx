@@ -18,8 +18,8 @@ import {config} from "./Config";
 interface AppS {
     privateMode?: boolean;
     notes?: (Note | INoteItem)[];
-    currentNote?: boolean;
-    noteInstance?: Note;
+    currentNote?: number;
+    noteInstance?: (Note | INoteItem);
     noteModificated?: boolean;
 }
 
@@ -37,26 +37,39 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             noteModificated: false
         };
         [
-            'onSetNote',
+            'openNote',
             'onInputEditor',
             'newNote',
             'onChangeTags',
             'onEnter',
-            'onStorageUpdate'
+            'onStorageUpdate',
+            'onStorageRemove',
         ].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
     componentDidMount() {
         storage.addEventListener('update', this.onStorageUpdate);
+        storage.addEventListener('remove', this.onStorageRemove);
     }
 
     componentWillUnmount() {
+        storage.removeEventListener('update', this.onStorageUpdate);
+        storage.removeEventListener('remove', this.onStorageRemove);
         if (config.debug.unmount) {
             consoleWarn(this, 'componentWillUnmount');
         }
         window.clearInterval(this.timerId);
         storage.exportStorage();
-        storage.removeEventListener('update', this.onStorageUpdate);
+    }
+
+    onStorageRemove() {
+        const notes = storage.getAll(this.state.privateMode);
+        const current = notes[0] || new Note();
+        this.setState({
+            notes: notes,
+            currentNote: current.id,
+            noteInstance: current
+        });
     }
 
     onStorageUpdate() {
@@ -69,7 +82,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
      * сохраняем старую
      * @param id
      */
-    onSetNote(id) {
+    openNote(id) {
         const {currentNote, noteInstance, noteModificated} = this.state;
         if (currentNote === id) {
             return;
@@ -152,7 +165,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
                 <NoteList
                     notes={notes}
                     currentNote={currentNote}
-                    onSetNote={this.onSetNote}
+                    onSetNote={this.openNote}
                     onNewNote={this.newNote}
                 />
                 <TagInput tags={noteInstance.tags} onChangeTags={this.onChangeTags}/>

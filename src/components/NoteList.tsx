@@ -67,8 +67,7 @@ export default class NoteList extends React.Component<NoteListP, any> {
                 searchWord: ''
             });
         } else if ((e.metaKey || e.ctrlKey) && e.keyCode === keyCodesDel) {
-            // todo remove note in storage
-            console.log((`Remove note id:${this.state.selected}`));
+            storage.remove(this.state.selected);
         }
     }
 

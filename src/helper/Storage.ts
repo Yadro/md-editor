@@ -33,6 +33,7 @@ export class Note {
             this.editTime = title.editTime || this.createTime;
         } else {
             // create new note
+            this.id = null;
             this.text = text || '';
             this.title = title || '';
             this.tags = [];
@@ -107,7 +108,11 @@ export class Storage {
             console.error('Storage: id not found id:', id);
         }
         this.notes.splice(idInArr, 1);
-        this.dispatchEvent({type: 'update'});
+        if (config.debug.storage) {
+            console.log(('Storage: Remove note id:' + id));
+        }
+        this.exportStorage();
+        this.dispatchEvent({type: 'remove'});
     }
 
     getAll(privateMode: boolean) {
