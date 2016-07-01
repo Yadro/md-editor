@@ -1,6 +1,7 @@
 import {EventDispatcher} from '../lib/EventDispatcher.js'
 import * as _ from 'lodash';
 import {config} from "../Config";
+const localStorage = chrome.storage.local;
 
 const nameStorage = 'storage';
 
@@ -53,6 +54,9 @@ export class Note {
     }
 }
 
+interface ISettings {
+    sortNotes;
+}
 
 export class Storage {
 
@@ -61,51 +65,51 @@ export class Storage {
     hasEventListener;
     removeEventListener;
 
-    data: INoteItem[] = [];
+    notes: INoteItem[] = [];
     tags: string[]; // not usage
-    sorting;
+    settings: ISettings;
 
     constructor() {
         this.importStorage((items) => {
-            this.data = items || this.data || [];
+            this.notes = items || this.notes || [];
             this.dispatchEvent({type: 'update'});
         });
     }
 
     add(item: INoteItem) {
-        item.id = this.data.length;
-        this.data.push(item);
+        item.id = this.notes.length;
+        this.notes.push(item);
         this.dispatchEvent({type: 'update'});
         this.exportStorage();
         return item;
     }
 
     remove(id) {
-        let objects = this.data.filter(o => o.id == id);
+        let objects = this.notes.filter(o => o.id == id);
         if (!objects.length) {
             debugger;
             console.error('Storage: elem not found id:', id);
         }
         let item = objects[0];
-        let idInArr = this.data.indexOf(item);
+        let idInArr = this.notes.indexOf(item);
         if (idInArr === -1) {
             debugger;
             console.error('Storage: id not found id:', id);
         }
-        this.data.splice(idInArr, 1);
+        this.notes.splice(idInArr, 1);
         this.dispatchEvent({type: 'update'});
     }
 
     getAll(privateMode: boolean) {
         if (privateMode) {
-            return this.data;
+            return this.notes;
         } else {
-            return this.data.filter((item) => item.tags.indexOf('private') === -1);
+            return this.notes.filter((item) => item.tags.indexOf('private') === -1);
         }
     }
 
     getById(id) {
-        let items = this.data.filter(e => e.id === id);
+        let items = this.notes.filter(e => e.id === id);
         if (items[0]) {
             return new Note(copyObject(items[0]));
         }
@@ -119,7 +123,7 @@ export class Storage {
      */
     setById(id: number, newValue: Note) {
         newValue.editTime = Date.now();
-        this.data = this.data.map(e => {
+        this.notes = this.notes.map(e => {
             if (e.id === id) {
                 return newValue;
             }
@@ -139,6 +143,11 @@ export class Storage {
         this.setById(id, newValue);
     }
 
+    /*
+    if (config.debug.storage) {
+     console.log('Storage: import storage', storage);
+    }
+     */
     importStorage(callback: (data: INoteItem[]) => any) {
         chrome.storage.local.get('storage', (data: any) => {
             const storage = data.storage;
@@ -153,13 +162,20 @@ export class Storage {
                 }
             }
         });
+
+        /*localStorageGet('storage', (storage) => {
+            localStorageGet('settings', () => {
+                callback();
+            });
+        });
+        return;*/
     }
 
     exportStorage() {
         if (config.debug.storage) {
-            console.log('Storage: save to LocalStorage', this.data);
+            console.log('Storage: save to LocalStorage', this.notes);
         }
-        chrome.storage.local.set({storage: this.data});
+        chrome.storage.local.set({storage: this.notes});
     }
 }
 EventDispatcher.prototype.apply(Storage.prototype);
@@ -171,4 +187,14 @@ export function isArray(o: any) {
 
 export function copyObject<T>(jsonObject: T): T {
     return JSON.parse(JSON.stringify(jsonObject));
+}
+
+function localStorageGet(field: string, back: (data) => void) {
+    localStorage.get(field, (items) => {
+        if (items[field] != null) {
+            back(items[field]);
+        } else {
+            console.error(`LocalStorage: fail to get '${field}'`);
+        }
+    })
 }
