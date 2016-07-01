@@ -155,6 +155,9 @@ export class Storage {
      * @param newValue
      */
     setByIdSaveDate(id: Hash, newValue: Note) {
+        if (config.debug.storage) {
+            console.log('Storage: save with edit time', newValue);
+        }
         newValue.editTime = Date.now();
         this.setById(id, newValue);
     }
@@ -165,7 +168,7 @@ export class Storage {
 
     setSettings(settings: ISettings) {
         if (config.debug.storage) {
-            console.log(settings);
+            console.log('Storage: set settings', settings);
         }
         this.settings = settings;
         this.exportStorage();
