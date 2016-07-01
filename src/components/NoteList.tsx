@@ -160,10 +160,6 @@ function itsTodayTime(date: number, now: moment.Moment) {
     );
 }
 
-function itsToday(date: number, now: number) {
-    return (now - date) <= 24 * 60 * 60 * 1000;
-}
-
 function filter(query: string, string: string) {
     string = string.toLocaleLowerCase();
     query = query.toLocaleLowerCase();

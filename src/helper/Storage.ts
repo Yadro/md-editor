@@ -118,9 +118,9 @@ export class Storage {
 
     getAll(privateMode: boolean) {
         if (privateMode) {
-            return this.notes;
+            return sort(this.notes);
         } else {
-            return this.notes.filter((item) => item.tags.indexOf('private') === -1);
+            return sort(this.notes.filter((item) => item.tags.indexOf('private') === -1));
         }
     }
 
@@ -200,4 +200,10 @@ export function makeHash(): Hash {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+}
+
+function sort(items: (Note|INoteItem)[], field?: 'createTime' | 'editTime') {
+    return items.sort((a, b) => {
+        return a.createTime < b.createTime ? 1 : (a.createTime === b.createTime ? 0 : -1);
+    })
 }
