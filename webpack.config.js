@@ -30,11 +30,7 @@ module.exports = {
       }, {
         test: /\.css$/,
         loader: 'style!css',
-      }/* {
-        test: /\.(png|jpg|otf|eot|svg|ttg|woff2?)$/,
-        loader: 'file-loader',
-        include: [/node_modules/]
-      }*/
+      }
     ]
   },
 
