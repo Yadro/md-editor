@@ -2,7 +2,7 @@ export var config = {
     debug: {
         moduleLife: false,
         unmount: false,
-        router: true,
+        router: false,
         storage: false
     }
 };

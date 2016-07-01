@@ -62,14 +62,12 @@ export class Storage {
     removeEventListener;
 
     data: INoteItem[] = [];
-    tags: string[];
+    tags: string[]; // not usage
+    sorting;
 
     constructor() {
         this.importStorage((items) => {
             this.data = items || this.data || [];
-            if (config.debug.storage) {
-                console.log('load from localstorage', items, this.data);
-            }
             this.dispatchEvent({type: 'update'});
         });
     }
@@ -143,9 +141,15 @@ export class Storage {
 
     importStorage(callback: (data: INoteItem[]) => any) {
         chrome.storage.local.get('storage', (data: any) => {
-            if (data.storage != null) {
-                if (isArray(data.storage)) {
-                    callback(data.storage);
+            const storage = data.storage;
+            if (storage != null) {
+                if (isArray(storage)) {
+                    if (config.debug.storage) {
+                        console.log('Storage: import storage', storage);
+                    }
+                    callback(storage);
+                } else {
+                    console.error('Storage: fail to load storage. Data:', data);
                 }
             }
         });
@@ -153,7 +157,7 @@ export class Storage {
 
     exportStorage() {
         if (config.debug.storage) {
-            console.log('save to localstorage', this.data);
+            console.log('Storage: save to LocalStorage', this.data);
         }
         chrome.storage.local.set({storage: this.data});
     }
