@@ -37,10 +37,10 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             noteModificated: false
         };
         [
-            'openNote',
-            'onInputEditor',
             'newNote',
+            'openNote',
             'saveNote',
+            'onInputEditor',
             'onChangeTags',
             'onEnter',
             'onStorageUpdate',
@@ -85,10 +85,10 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
         if (this.state.currentNote === id) {
             return;
         }
+        this.saveNote();
+
         const note = storage.getById(id);
         console.log('select note id:'+note.id);
-
-        this.saveNote();
 
         this.setState({
             currentNote: id,
@@ -131,6 +131,11 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
         })
     }
 
+    /**
+     * Сохранение введенного текста в state
+     * добавление таймера для сохранения заметки в storage
+     * @param e
+     */
     onInputEditor(e: string) {
         const note = this.state.noteInstance;
         note.setText(e);
