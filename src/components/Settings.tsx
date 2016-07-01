@@ -84,11 +84,14 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
 
     radioBox(variants: RadioButtonItem[], field: string) {
         const current = this.state.settings[field];
-        return variants.map((el, key) => {
+        return variants.map((el, id) => {
+            const key = field + id;
             return (
-                <li key={key} onClick={this.setRadioValue.bind(null, field, el.value)}>
-                    <input type="radio" checked={current === el.value}/>
-                    <label>{el.text}</label>
+                <li key={key}>
+                    <input id={key} type="radio"
+                           checked={current === el.value}
+                           onChange={this.setRadioValue.bind(null, field, el.value)}/>
+                    <label htmlFor={key}>{el.text}</label>
                 </li>
             )
         });
