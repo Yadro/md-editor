@@ -4,6 +4,7 @@ import './App.css';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as moment from "moment";
 import NoteList from './components/NoteList';
 import SimpleMDEWrap from "./components/SimpleMDEWrap";
 import TagInput from "./components/TagInput";
@@ -166,22 +167,26 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
     }
     
     render() {
-        const {noteInstance, privateMode, notes, currentNote} = this.state;
+        const state = this.state;
+        const currentNote = state.currentNote;
+        const noteInstance = state.noteInstance;
         return (
-            <div className={privateMode ? 'grey-bg' : ''}>
+            <div className={state.privateMode ? 'grey-bg' : ''}>
                 <NoteList
-                    notes={notes}
+                    notes={state.notes}
                     currentNote={currentNote}
                     onSetNote={this.openNote}
                     onNewNote={this.newNote}
                 />
                 <TagInput tags={noteInstance.tags} onChangeTags={this.onChangeTags}/>
-                <SimpleMDEWrap 
+                <SimpleMDEWrap
                     value={noteInstance.text}
                     onChange={this.onInputEditor}
                     currentNote={currentNote}
                 />
                 <button onClick={this.props.go.bind(this, 'Settings', {})}>settings</button>
+                <span>Create: {moment(noteInstance.createTime).format('DD.MM HH:mm:ss')} </span>
+                <span>Last edit: {moment(noteInstance.editTime).format('DD.MM HH:mm:ss')}</span>
             </div>
         )
     }
