@@ -4,15 +4,23 @@ import * as React from 'react';
 import {
     Editor,
     EditorState,
+    ContentState,
     RichUtils,
+    convertFromRaw,
+    convertToRaw,
+    CompositeDecorator
 } from 'draft-js';
+//noinspection TypeScriptCheckImport
+import {stateToMarkdown} from 'draft-js-export-markdown';
 import {BlockStyleControls} from "./BlockStyleControls";
 import {InlineStyleControls} from "./InlineStyleControls";
+import {hashtagStrategy, HashtagSpan, noteLinkStrategy, NoteLinkSpanBind} from "./DecorationComponents";
 
 interface WrapEditoP {
     value;
     currentNote;
     onChange: (text: string) => any;
+    selectNote: Function;
 }
 
 interface WrapEditorS {
@@ -23,15 +31,22 @@ interface WrapEditorS {
 export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS> {
     focus;
     onChange;
-    handleKeyCommand;
-    toggleBlockType;
-    toggleInlineStyle;
     
     constructor(props) {
         super(props);
 
+        const compositeDecorator = new CompositeDecorator([
+            {
+                strategy: hashtagStrategy,
+                component: HashtagSpan,
+            }, {
+                strategy: noteLinkStrategy,
+                component: NoteLinkSpanBind(props.selectNote),
+            },
+        ]);
+
         this.state = {
-            editorState: EditorState.createEmpty(),
+            editorState: EditorState.createEmpty(compositeDecorator),
         };
 
         this.focus = () => this.refs.editor.focus();
@@ -41,6 +56,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
             'handleKeyCommand',
             'toggleBlockType',
             'toggleInlineStyle',
+            'logRawContext',
         ].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
@@ -70,6 +86,13 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                 inlineStyle
             )
         );
+    }
+
+    logRawContext() {
+        const editorState = this.state.editorState;
+        const context = editorState.getCurrentContent();
+        const raw = convertToRaw(context);
+        console.log(raw);
     }
 
     render() {
@@ -105,6 +128,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                         spellCheck={true}
                     />
                 </div>
+                <button onClick={this.logRawContext}>log</button>
             </div>
         );
     }

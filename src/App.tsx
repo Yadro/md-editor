@@ -42,6 +42,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             'newNote',
             'openNote',
             'saveNote',
+            'selectNote',
             'onInputEditor',
             'onChangeTags',
             'onEnter',
@@ -166,6 +167,11 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             document.querySelector('body').className = 'private';
         }
     }
+
+    selectNote(noteId: Hash) {
+        console.warn('select note id:', noteId);
+        // todo this.openNote
+    }
     
     render() {
         const state = this.state;
@@ -184,6 +190,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
                     value={noteInstance.text}
                     onChange={this.onInputEditor}
                     currentNote={currentNote}
+                    selectNote={this.selectNote}
                 />
                 <button onClick={this.props.go.bind(this, 'Settings', {})}>settings</button>
                 <span>Create: {moment(noteInstance.createTime).format('DD.MM HH:mm:ss')} </span>

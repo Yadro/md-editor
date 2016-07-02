@@ -312,6 +312,16 @@ declare module "draft-js" {
         type EntityType = "TOKEN" | string;
 
         function genKey(): string
+
+        interface CompositeDecoratorComponentProps {
+            decoratedText: string;
+            dir;
+            entityKey;
+            
+            // react
+            children;
+            key: string;
+        }
     }
 
     export = Draft;
