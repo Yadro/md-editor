@@ -13,7 +13,7 @@ import {
 //noinspection TypeScriptCheckImport
 import {stateToMarkdown} from 'draft-js-export-markdown';
 //noinspection TypeScriptCheckImport
-import {stateToMarkdown} from 'draft-js-import-markdown';
+import {stateFromMarkdown} from 'draft-js-import-markdown';
 
 import {BlockStyleControls} from "./BlockStyleControls";
 import {InlineStyleControls} from "./InlineStyleControls";
@@ -34,11 +34,15 @@ interface WrapEditorS {
 export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS> {
     focus;
     onChange;
+    currentNote;
+
+    compositeDecorator;
     
     constructor(props) {
         super(props);
 
-        const compositeDecorator = new CompositeDecorator([
+        this.currentNote = this.props.currentNote;
+        this.compositeDecorator = new CompositeDecorator([
             {
                 strategy: hashtagStrategy,
                 component: HashtagSpan,
@@ -47,9 +51,12 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                 component: NoteLinkSpanBind(props.selectNote),
             },
         ]);
-
+        
         this.state = {
-            editorState: EditorState.createEmpty(compositeDecorator),
+            editorState: EditorState.createWithContent(
+                stateFromMarkdown('_Welcome._ Have a ++nice++ day!'),
+                this.compositeDecorator
+            ),
         };
 
         this.focus = () => this.refs.editor.focus();
@@ -62,6 +69,20 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
             'logRawContext',
             'exportLog',
         ].forEach(fn => this[fn] = this[fn].bind(this));
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentNote === this.currentNote) {
+            return;
+        }
+        console.log(nextProps);
+        this.currentNote = nextProps.currentNote;
+        this.setState({
+            editorState: EditorState.createWithContent(
+                stateFromMarkdown(nextProps.value),
+                this.compositeDecorator
+            )
+        });
     }
 
     handleKeyCommand(command) {
