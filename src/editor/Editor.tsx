@@ -12,6 +12,9 @@ import {
 } from 'draft-js';
 //noinspection TypeScriptCheckImport
 import {stateToMarkdown} from 'draft-js-export-markdown';
+//noinspection TypeScriptCheckImport
+import {stateToMarkdown} from 'draft-js-import-markdown';
+
 import {BlockStyleControls} from "./BlockStyleControls";
 import {InlineStyleControls} from "./InlineStyleControls";
 import {hashtagStrategy, HashtagSpan, noteLinkStrategy, NoteLinkSpanBind} from "./DecorationComponents";
@@ -57,6 +60,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
             'toggleBlockType',
             'toggleInlineStyle',
             'logRawContext',
+            'exportLog',
         ].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
@@ -95,6 +99,11 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
         console.log(raw);
     }
 
+    exportLog() {
+        const editorState = this.state.editorState;
+        console.log(stateToMarkdown(editorState.getCurrentContent()));
+    }
+
     render() {
         const {editorState} = this.state;
 
@@ -129,6 +138,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                     />
                 </div>
                 <button onClick={this.logRawContext}>log</button>
+                <button onClick={this.exportLog}>export</button>
             </div>
         );
     }

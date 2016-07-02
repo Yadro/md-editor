@@ -2,6 +2,7 @@ import * as React from 'react';
 import {CompositeDecoratorComponentProps} from "draft-js";
 import {ContentBlock} from "draft-js";
 
+// fixme
 const HANDLE_REGEX = /\@[\w]+/g;
 const NOTELINK_REGEX = /\[\w+\]/g;
 
