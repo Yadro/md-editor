@@ -30,8 +30,11 @@ declare module "draft-js" {
             getPropsForKey(): any
         }
 
+        /**
+         * @example https://github.com/facebook/draft-js/tree/master/examples/media/
+         */
         interface Entity {
-            create(type: string, mutability: string, data?: Object): EntityInstance,
+            create(type: string, mutability: Mutability, data?: Object): EntityInstance,
             add(instance: EntityInstance): string,
             get(key: string): EntityInstance,
             mergeData(key: string, toMerge: any): EntityInstance,
@@ -41,7 +44,7 @@ declare module "draft-js" {
         interface EntityInstance {
             getData(): any,
             getKey(): string,
-            getMutability(): string
+            getMutability(): Mutability
         }
 
         interface BlockMapBuilder {
