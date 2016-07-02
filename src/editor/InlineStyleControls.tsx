@@ -8,7 +8,12 @@ var INLINE_STYLES = [
     {label: 'Monospace', style: 'CODE'},
 ];
 
-export const InlineStyleControls = (props) => {
+interface InlineStyleControlsP {
+    editorState;
+    onToggle;
+}
+
+export const InlineStyleControls = (props: InlineStyleControlsP) => {
     var currentStyle = props.editorState.getCurrentInlineStyle();
     return (
         <div className="RichEditor-controls">

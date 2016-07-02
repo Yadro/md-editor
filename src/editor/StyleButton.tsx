@@ -1,10 +1,17 @@
 import * as React from 'react';
 
-export default class StyleButton extends React.Component<any, any> {
+interface StyleButtonP {
+    style;
+    active;
+    label;
+    onToggle: Function;
+}
+
+export default class StyleButton extends React.Component<StyleButtonP, any> {
     onToggle;
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.onToggle = (e) => {
             e.preventDefault();
             this.props.onToggle(this.props.style);

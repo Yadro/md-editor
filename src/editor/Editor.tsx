@@ -9,14 +9,18 @@ import {
 import {BlockStyleControls} from "./BlockStyleControls";
 import {InlineStyleControls} from "./InlineStyleControls";
 
-interface EditorP {
+interface WrapEditoP {
     value;
     currentNote;
     onChange: (text: string) => any;
 }
 
+interface WrapEditorS {
+    editorState: EditorState
+}
 
-export default class WrapEditor extends React.Component<EditorP, any> {
+
+export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS> {
     focus;
     onChange;
     handleKeyCommand;
@@ -33,12 +37,14 @@ export default class WrapEditor extends React.Component<EditorP, any> {
         this.focus = () => this.refs.editor.focus();
         this.onChange = (editorState) => this.setState({editorState});
 
-        this.handleKeyCommand = (command) => this._handleKeyCommand(command);
-        this.toggleBlockType = (type) => this._toggleBlockType(type);
-        this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
+        [
+            'handleKeyCommand',
+            'toggleBlockType',
+            'toggleInlineStyle',
+        ].forEach(fn => this[fn] = this[fn].bind(this));
     }
 
-    _handleKeyCommand(command) {
+    handleKeyCommand(command) {
         const {editorState} = this.state;
         const newState = RichUtils.handleKeyCommand(editorState, command);
         if (newState) {
@@ -48,7 +54,7 @@ export default class WrapEditor extends React.Component<EditorP, any> {
         return false;
     }
 
-    _toggleBlockType(blockType) {
+    toggleBlockType(blockType) {
         this.onChange(
             RichUtils.toggleBlockType(
                 this.state.editorState,
@@ -57,7 +63,7 @@ export default class WrapEditor extends React.Component<EditorP, any> {
         );
     }
 
-    _toggleInlineStyle(inlineStyle) {
+    toggleInlineStyle(inlineStyle) {
         this.onChange(
             RichUtils.toggleInlineStyle(
                 this.state.editorState,
@@ -69,8 +75,6 @@ export default class WrapEditor extends React.Component<EditorP, any> {
     render() {
         const {editorState} = this.state;
 
-        // If the user changes block type before entering any text, we can
-        // either style the placeholder or hide it. Let's just hide it now.
         let className = 'RichEditor-editor';
         var contentState = editorState.getCurrentContent();
         if (!contentState.hasText()) {
