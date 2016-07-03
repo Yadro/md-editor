@@ -32,7 +32,6 @@ export const NoteLinkSpanBind = (selectNote: Function) => {
         const title = props.decoratedText.slice(1, -1);
         return (
             <span
-                {...props}
                 className="NoteLink"
                 style={{color: 'rgb(17, 85, 204)', textDecoration: 'underline'}}
                 onClick={selectNote.bind(null, title)}>
