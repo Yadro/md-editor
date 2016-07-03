@@ -1,3 +1,5 @@
+/// <reference path="globals/chrome/index.d.ts" />
+
 chrome.app.runtime.onLaunched.addListener(function() {
   var window = chrome.app.window.create('index.html', {
     id: 'main',
