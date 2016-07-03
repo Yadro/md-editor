@@ -1,5 +1,6 @@
 ///<reference path="../../typings/index.d.ts"/>
 import '../../style/editor/RichEditor.css';
+import '../../style/editor/Editor.css';
 import * as React from 'react';
 import {
     Editor,
@@ -158,8 +159,8 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                         spellCheck={true}
                     />
                 </div>
-                <button onClick={this.logRawContext}>log</button>
-                <button onClick={this.exportLog}>export</button>
+                <span className="RichEditor-styleButton" onClick={this.logRawContext}>log</span>
+                <span className="RichEditor-styleButton" onClick={this.exportLog}>export</span>
             </div>
         );
     }
