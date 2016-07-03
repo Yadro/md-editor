@@ -139,6 +139,14 @@ export class Storage {
         return null;
     }
 
+    getByTitle(title: string) {
+        let items = this.notes.filter(e => e.title === title);
+        if (items[0]) {
+            return new Note(copyObject(items[0]));
+        }
+        return null;
+    }
+
     /**
      * Присваиваем новое значение newValue
      * @param id

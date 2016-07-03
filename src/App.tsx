@@ -161,9 +161,20 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
         }
     }
 
-    selectNote(noteId: Hash) {
-        console.warn('select note id:', noteId);
-        // todo this.openNote
+    /**
+     * todo объединить openNote
+     * @param title
+     */
+    selectNote(title: string) {
+        console.warn('select note: ', title);
+        const note = storage.getByTitle(title);
+
+        // fixme
+        this.setState({
+            currentNote: note.id,
+            noteInstance: note,
+            noteModificated: false
+        })
     }
     
     render() {
