@@ -14,7 +14,9 @@ module.exports = {
       'moment',
       'simplemde',
       'react-tagsinput',
-      'draft-js'
+      'draft-js',
+      'draft-js-import-markdown',
+      'draft-js-export-markdown'
     ]
   },
   output: {

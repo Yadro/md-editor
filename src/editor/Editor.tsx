@@ -15,7 +15,6 @@ import {
 import {stateToMarkdown} from 'draft-js-export-markdown';
 //noinspection TypeScriptCheckImport
 import {stateFromMarkdown} from 'draft-js-import-markdown';
-
 import {BlockStyleControls} from "./BlockStyleControls";
 import {InlineStyleControls} from "./InlineStyleControls";
 import {hashtagStrategy, HashtagSpan, noteLinkStrategy, NoteLinkSpanBind} from "./DecorationComponents";
@@ -201,6 +200,7 @@ function getBlockStyle(block) {
             return null;
     }
 }
+
 
 
 
