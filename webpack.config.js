@@ -24,6 +24,7 @@ module.exports = {
 
   module: {
     loaders: [
+      //{ test: require.resolve("react"), loader: "expose?React" }, // for react dev tools
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
