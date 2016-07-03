@@ -135,11 +135,11 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
     /**
      * Сохранение введенного текста в state
      * добавление таймера для сохранения заметки в storage
-     * @param e
+     * @param text
      */
-    onInputEditor(e: string) {
+    onInputEditor(text: string) {
         const note = this.state.noteInstance;
-        note.setText(e);
+        note.setText(text);
         this.setState({
             noteInstance: note,
             noteModificated: true
