@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {CompositeDecoratorComponentProps} from "draft-js";
 import {ContentBlock} from "draft-js";
+import {Entity} from "draft-js";
 
 // fixme
 const HANDLE_REGEX = /\@[\w]+/g;
@@ -23,8 +24,31 @@ function findWithRegex(regex, contentBlock: ContentBlock, callback) {
     }
 }
 
+
+export function findLinkEntities(contentBlock, callback) {
+    contentBlock.findEntityRanges(
+        (character) => {
+            const entityKey = character.getEntity();
+            return (
+                entityKey !== null &&
+                Entity.get(entityKey).getType() === 'LINK'
+            );
+        },
+        callback
+    );
+}
+
 export const HashtagSpan = (props: CompositeDecoratorComponentProps) => {
     return <span {...props} style={{color: 'rgba(95, 184, 138, 1.0)'}}>{props.children}</span>;
+};
+
+export const LinkSpan = (props) => {
+    const url = Entity.get(props.entityKey).getData().url;
+    return (
+        <a href={url} style={{color: 'rgb(17, 85, 204)', textDecoration: 'underline'}}>
+            {props.children}
+        </a>
+    );
 };
 
 export const NoteLinkSpanBind = (selectNote: Function) => {

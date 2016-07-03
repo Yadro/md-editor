@@ -17,7 +17,10 @@ import {stateToMarkdown} from 'draft-js-export-markdown';
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 import {BlockStyleControls} from "./BlockStyleControls";
 import {InlineStyleControls} from "./InlineStyleControls";
-import {hashtagStrategy, HashtagSpan, noteLinkStrategy, NoteLinkSpanBind} from "./DecorationComponents";
+import {
+    hashtagStrategy, HashtagSpan, noteLinkStrategy, NoteLinkSpanBind,
+    findLinkEntities, LinkSpan
+} from "./DecorationComponents";
 
 interface WrapEditoP {
     value;
@@ -48,7 +51,10 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
             }, {
                 strategy: noteLinkStrategy,
                 component: NoteLinkSpanBind(props.selectNote), // todo нужна ли функция selectNote?
-            },
+            }, {
+                strategy: findLinkEntities,
+                component: LinkSpan
+            }
         ]);
         
         this.state = {

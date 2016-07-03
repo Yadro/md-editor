@@ -34,7 +34,7 @@ declare module "draft-js" {
          * @example https://github.com/facebook/draft-js/tree/master/examples/media/
          */
         interface Entity {
-            create(type: string, mutability: Mutability, data?: Object): EntityInstance,
+            create(type: EntityType, mutability: Mutability, data?: Object): EntityInstance,
             add(instance: EntityInstance): string,
             get(key: string): EntityInstance,
             mergeData(key: string, toMerge: any): EntityInstance,
@@ -42,6 +42,7 @@ declare module "draft-js" {
         }
 
         interface EntityInstance {
+            getType(): EntityType;
             getData(): any,
             getKey(): string,
             getMutability(): Mutability
@@ -309,7 +310,7 @@ declare module "draft-js" {
          * @example https://github.com/facebook/draft-js/tree/master/examples/entity
          */
         type Mutability = "IMMUTABLE" | "MUTABLE" | "SEGMENTED" | string;
-        type EntityType = "TOKEN" | string;
+        type EntityType = 'LINK' | "TOKEN" | string;
 
         function genKey(): string
 
