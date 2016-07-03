@@ -29,7 +29,7 @@ export function findLinkEntities(contentBlock, callback) {
 }
 
 export const HashtagSpan = (props: CompositeDecoratorComponentProps) => {
-    return <span {...props} style={{color: 'rgba(95, 184, 138, 1.0)'}}>{props.children}</span>;
+    return <span style={{color: 'rgba(95, 184, 138, 1.0)'}}>{props.children}</span>;
 };
 
 export const LinkSpan = (props) => {

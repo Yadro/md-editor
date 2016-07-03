@@ -1,5 +1,4 @@
 ///<reference path="../../typings/index.d.ts"/>
-import '../../style/editor/RichEditor.css';
 import '../../style/editor/Editor.css';
 import * as React from 'react';
 import {
@@ -160,30 +159,35 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
         }
 
         return (
-            <div className="RichEditor-root">
-                <BlockStyleControls
-                    editorState={editorState}
-                    onToggle={this.toggleBlockType}
-                />
-                <InlineStyleControls
-                    editorState={editorState}
-                    onToggle={this.toggleInlineStyle}
-                />
-                <div className={className} onClick={this.focus}>
-                    <Editor
-                        blockStyleFn={getBlockStyle}
-                        customStyleMap={styleMap}
+            <div>
+                <div className="RichEditor-root">
+                    <BlockStyleControls
                         editorState={editorState}
-                        handleKeyCommand={this.handleKeyCommand}
-                        onChange={this.onChange}
-                        placeholder="Tell a story..."
-                        ref="editor"
-                        spellCheck={true}
+                        onToggle={this.toggleBlockType}
                     />
+                    <InlineStyleControls
+                        editorState={editorState}
+                        onToggle={this.toggleInlineStyle}
+                    />
+                    <div className={className} onClick={this.focus}>
+                        <Editor
+                            blockStyleFn={getBlockStyle}
+                            customStyleMap={styleMap}
+                            editorState={editorState}
+                            handleKeyCommand={this.handleKeyCommand}
+                            onChange={this.onChange}
+                            placeholder="Tell a story..."
+                            ref="editor"
+                            spellCheck={true}
+                        />
+                    </div>
                 </div>
-                <span className="RichEditor-styleButton" onClick={this.logRawContext}>log</span>
-                <span className="RichEditor-styleButton" onClick={this.exportLog}>export</span>
+                <div>
+                    <span className="RichEditor-styleButton" onClick={this.logRawContext}>log</span>
+                    <span className="RichEditor-styleButton" onClick={this.exportLog}>export</span>
+                </div>
             </div>
+
         );
     }
 }
