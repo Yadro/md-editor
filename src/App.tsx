@@ -138,8 +138,6 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
      * @param e
      */
     onInputEditor(e: string) {
-        console.log('onInputEditor', e);
-
         const note = this.state.noteInstance;
         note.setText(e);
         this.setState({

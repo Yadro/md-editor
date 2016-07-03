@@ -77,10 +77,10 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
     }
 
     componentWillReceiveProps(nextProps) {
+        // https://facebook.github.io/draft-js/docs/advanced-topics-decorators.html#setting-new-decorators
         if (nextProps.currentNote === this.currentNote) {
             return;
         }
-        console.log(nextProps);
         this.currentNote = nextProps.currentNote;
         this.setState({
             editorState: EditorState.createWithContent(
