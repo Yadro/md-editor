@@ -26,7 +26,6 @@ interface AppS {
 }
 
 class App extends React.Component<SimpleRouterInjProps, AppS> {
-    timerId;
 
     constructor(props) {
         super(props);
@@ -59,7 +58,6 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
     componentWillUnmount() {
         storage.removeEventListener('update', this.onStorageUpdate);
         storage.removeEventListener('remove', this.onStorageRemove);
-        window.clearInterval(this.timerId);
         this.saveNote();
         storage.exportStorage();
     }
@@ -140,6 +138,8 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
      * @param e
      */
     onInputEditor(e: string) {
+        console.log('onInputEditor', e);
+
         const note = this.state.noteInstance;
         note.setText(e);
         this.setState({
@@ -147,13 +147,8 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
             noteModificated: true
         });
 
-        if (this.timerId) {
-            window.clearInterval(this.timerId);
-        }
-        this.timerId = window.setTimeout((e) => {
-            storage.setById(note.id, note);
-            storage.exportStorage();
-        }, 1500);
+        storage.setById(note.id, note);
+        storage.exportStorage();
     }
     
     onEnter(st) {

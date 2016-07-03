@@ -34,10 +34,9 @@ interface WrapEditorS {
 
 export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS> {
     focus;
-    onChange;
     currentNote;
-
     compositeDecorator;
+    timer;
     
     constructor(props) {
         super(props);
@@ -49,7 +48,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                 component: HashtagSpan,
             }, {
                 strategy: noteLinkStrategy,
-                component: NoteLinkSpanBind(props.selectNote),
+                component: NoteLinkSpanBind(props.selectNote), // todo нужна ли функция selectNote?
             },
         ]);
         
@@ -59,17 +58,23 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                 this.compositeDecorator
             ),
         };
-
-        this.focus = () => this.refs.editor.focus();
-        this.onChange = (editorState) => this.setState({editorState});
-
+        
         [
+            'onChange',
             'handleKeyCommand',
             'toggleBlockType',
             'toggleInlineStyle',
             'logRawContext',
             'exportLog',
         ].forEach(fn => this[fn] = this[fn].bind(this));
+        this.focus = () => this.refs.editor.focus();
+    }
+
+
+    componentWillUnmount() {
+        if (this.timer) {
+            window.clearTimeout(this.timer);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -84,6 +89,18 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                 this.compositeDecorator
             )
         });
+    }
+    
+    onChange(editorState: EditorState) {
+        if (this.timer) {
+            window.clearTimeout(this.timer);
+        }
+        this.timer = window.setTimeout(() => {
+            this.props.onChange(
+                stateToMarkdown(editorState.getCurrentContent())
+            )
+        }, 1500);
+        this.setState({editorState});
     }
 
     handleKeyCommand(command) {
