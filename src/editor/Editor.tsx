@@ -59,7 +59,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
         
         this.state = {
             editorState: EditorState.createWithContent(
-                stateFromMarkdown('_Welcome._ Have a ++nice++ day!'),
+                stateFromMarkdown('_Welcome._ Have a ++nice++ day! link: [google.com](https://google.com/)'),
                 this.compositeDecorator
             ),
         };

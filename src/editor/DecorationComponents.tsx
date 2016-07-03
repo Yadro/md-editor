@@ -15,16 +15,6 @@ export function noteLinkStrategy(contentBlock: ContentBlock, callback) {
     findWithRegex(NOTELINK_REGEX, contentBlock, callback);
 }
 
-function findWithRegex(regex, contentBlock: ContentBlock, callback) {
-    const text = contentBlock.getText();
-    let matchArr, start;
-    while ((matchArr = regex.exec(text)) !== null) {
-        start = matchArr.index;
-        callback(start, start + matchArr[0].length);
-    }
-}
-
-
 export function findLinkEntities(contentBlock, callback) {
     contentBlock.findEntityRanges(
         (character) => {
@@ -44,10 +34,12 @@ export const HashtagSpan = (props: CompositeDecoratorComponentProps) => {
 
 export const LinkSpan = (props) => {
     const url = Entity.get(props.entityKey).getData().url;
+    const open = () => window.open(url,'_blank');
     return (
-        <a href={url} style={{color: 'rgb(17, 85, 204)', textDecoration: 'underline'}}>
+        <span onClick={open}
+              style={{color: 'rgb(17, 85, 204)', textDecoration: 'underline'}}>
             {props.children}
-        </a>
+        </span>
     );
 };
 
@@ -65,3 +57,12 @@ export const NoteLinkSpanBind = (selectNote: Function) => {
     };
     return NoteLinkSpan;
 };
+
+function findWithRegex(regex, contentBlock: ContentBlock, callback) {
+    const text = contentBlock.getText();
+    let matchArr, start;
+    while ((matchArr = regex.exec(text)) !== null) {
+        start = matchArr.index;
+        callback(start, start + matchArr[0].length);
+    }
+}
