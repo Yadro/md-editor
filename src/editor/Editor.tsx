@@ -11,6 +11,8 @@ import {
     CompositeDecorator
 } from 'draft-js';
 //noinspection TypeScriptCheckImport
+import {diff} from 'deep-diff';
+//noinspection TypeScriptCheckImport
 import {stateToMarkdown} from 'draft-js-export-markdown';
 //noinspection TypeScriptCheckImport
 import {stateFromMarkdown} from 'draft-js-import-markdown';
@@ -20,6 +22,7 @@ import {
     hashtagStrategy, HashtagSpan, noteLinkStrategy, NoteLinkSpanBind,
     findLinkEntities, LinkSpan
 } from "./DecorationComponents";
+import {RawData} from "draft-js";
 
 interface WrapEditoP {
     value;
@@ -38,10 +41,13 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
     currentNote;
     compositeDecorator;
     timer;
+    isChanged: boolean;
+    lastContentStateRaw: RawData;
     
     constructor(props) {
         super(props);
 
+        this.isChanged = false;
         this.currentNote = this.props.currentNote;
         this.compositeDecorator = new CompositeDecorator([
             {
@@ -74,7 +80,11 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
         this.focus = () => this.refs.editor.focus();
     }
 
+    componentWillMount() {
+        document.addEventListener('keyup', (e) => {
 
+        })
+    }
     componentWillUnmount() {
         if (this.timer) {
             window.clearTimeout(this.timer);
@@ -96,14 +106,31 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
     }
     
     onChange(editorState: EditorState) {
-        if (this.timer) {
-            window.clearTimeout(this.timer);
+        console.time('getCurrentContent');
+        const contentState = editorState.getCurrentContent();
+        console.timeEnd('getCurrentContent');
+
+        const contentStateRaw = convertToRaw(contentState);
+        if (this.lastContentStateRaw) {
+            // fixme И таак сойдет...
+            const diff_ = diff(this.lastContentStateRaw, contentStateRaw);
+            this.lastContentStateRaw = contentStateRaw;
+            this.isChanged = diff_ ? true : false;
+            if (this.isChanged) {
+                if (this.timer) {
+                    window.clearTimeout(this.timer);
+                }
+                this.timer = window.setTimeout(() => {
+                    this.isChanged = false;
+                    this.props.onChange(
+                        stateToMarkdown(contentState)
+                    );
+                }, 1500);
+            }
+        } else {
+            this.lastContentStateRaw = contentStateRaw;
         }
-        this.timer = window.setTimeout(() => {
-            this.props.onChange(
-                stateToMarkdown(editorState.getCurrentContent())
-            )
-        }, 1500);
+
         this.setState({editorState});
     }
 
@@ -176,6 +203,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                             editorState={editorState}
                             handleKeyCommand={this.handleKeyCommand}
                             onChange={this.onChange}
+                            handleBeforeInput={() => console.log(arguments)}
                             placeholder="Tell a story..."
                             ref="editor"
                             spellCheck={true}
@@ -183,6 +211,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                     </div>
                 </div>
                 <div>
+                    <span className="RichEditor-styleButton">{this.isChanged ? 'changed' : 'no changes'}</span>
                     <span className="RichEditor-styleButton" onClick={this.logRawContext}>log</span>
                     <span className="RichEditor-styleButton" onClick={this.exportLog}>export</span>
                 </div>
@@ -211,6 +240,26 @@ function getBlockStyle(block) {
     }
 }
 
+
+function isChanged(prev: ContentState, next: ContentState) {
+    const prevRaw = convertToRaw(prev);
+    const nextRaw = convertToRaw(next);
+
+    const nextBlocks = nextRaw.blocks;
+    const prevBlocks = prevRaw.blocks;
+    if (prevBlocks.length === nextBlocks.length) {
+        for (let i = 0; i < prevBlocks.length; i++) {
+            let prBlock = prevBlocks[i];
+            if (prBlock.text === nextBlocks[i].text) {
+                prBlock.entityRanges
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
+}
 
 
 
