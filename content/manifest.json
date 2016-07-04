@@ -1,7 +1,7 @@
 {
-  "name": "chrome-react-starter",
-  "description": "Starter Chrome App with React",
-  "version": "0.1",
+  "name": "nvALTium",
+  "description": "Simple note editor",
+  "version": "0.1.1",
   "offline_enabled": true,
   "manifest_version": 2,
   "app": {
