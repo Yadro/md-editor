@@ -71,6 +71,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
         
         [
             'onChange',
+            'handleInput',
             'handleKeyCommand',
             'toggleBlockType',
             'toggleInlineStyle',
@@ -104,11 +105,14 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
             )
         });
     }
+
+    handleInput(e) {
+        console.log(e);
+        this.isChanged = true;
+    }
     
     onChange(editorState: EditorState) {
-        console.time('getCurrentContent');
         const contentState = editorState.getCurrentContent();
-        console.timeEnd('getCurrentContent');
 
         const contentStateRaw = convertToRaw(contentState);
         if (this.lastContentStateRaw) {
@@ -203,7 +207,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
                             editorState={editorState}
                             handleKeyCommand={this.handleKeyCommand}
                             onChange={this.onChange}
-                            handleBeforeInput={() => console.log(arguments)}
+                            handleBeforeInput={this.handleInput}
                             placeholder="Tell a story..."
                             ref="editor"
                             spellCheck={true}
