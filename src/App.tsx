@@ -15,6 +15,7 @@ import {storage, Note, INoteItem, Hash} from "./helper/Storage";
 import {consoleWarn} from "./helper/Tools";
 import {config} from "./Config";
 import WrapEditor from "./editor/Editor";
+import HelpComp from "./components/HelpComp";
 
 
 interface AppS {
@@ -208,7 +209,8 @@ const routers = {
     index: Welcome,
     Welcome: Welcome,
     App: App,
-    Settings: Settings
+    Settings: Settings,
+    Help: HelpComp
 };
 
 ReactDOM.render(<SimpleRouter routers={routers} />, document.querySelector('.react'));

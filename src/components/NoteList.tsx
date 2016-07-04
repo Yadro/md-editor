@@ -132,7 +132,12 @@ export default class NoteList extends React.Component<NoteListP, NoteListS> {
             this.state.list;
         return (
             <div className="noteList">
-                <input type="text" onChange={this.handleSearch} onFocus={this.onSearchFocus} onBlur={this.onSearchBlur}/>
+                <input type="text"
+                       onChange={this.handleSearch}
+                       onFocus={this.onSearchFocus}
+                       onBlur={this.onSearchBlur}
+                       placeholder="Search or Create"
+                />
                 {this.renderNoteList(list)}
             </div>
         )

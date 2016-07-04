@@ -108,6 +108,7 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
                     </ul>
                     <input type="checkbox" onChange={this.onClickCheckbox} value={this.state.checkbox}/>
                 </div>
+                <button onClick={() => this.props.go('Help')}>Help</button>
             </div>
         )
     }
