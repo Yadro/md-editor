@@ -1,3 +1,5 @@
+import '../../style/components/Welcome.css';
+
 import * as React from 'react';
 import {SimpleRouterInjProps} from "../lib/SimpleRouter";
 import {config} from "../Config";
@@ -26,7 +28,8 @@ export default class Welcome extends React.Component<SelectNotesP, any> {
 
     render() {
         return (
-            <div>
+            <div className="Welcome">
+                <h1>Welcome</h1>
                 <button onClick={this.onClick.bind(this)}>continue</button>
                 <button onClick={() => this.setState({pswd: 1})}>more</button>
                 {this.state.pswd ?
