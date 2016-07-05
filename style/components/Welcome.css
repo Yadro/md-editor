@@ -1,7 +1,26 @@
 .Welcome {
-    width: 100%;
+    width: 500px;
     height: 100%;
+    margin: 0 auto;
 }
+
+.welcome-wrapper {
+    width: inherit;
+    height: 900px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .Welcome h1 {
     font-size: 40pt;
+    text-align: center;
+    /*margin-top: 200px;*/
 }
+
+.Welcome .welcome-container button {
+    display: block;
+    width: 150px;
+    margin: 20px auto 0;
+}
+
+

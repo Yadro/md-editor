@@ -29,17 +29,22 @@ export default class Welcome extends React.Component<SelectNotesP, any> {
     render() {
         return (
             <div className="Welcome">
-                <h1>Welcome</h1>
-                <button onClick={this.onClick.bind(this)}>continue</button>
-                <button onClick={() => this.setState({pswd: 1})}>more</button>
-                {this.state.pswd ?
-                    <span>
+                <div className="welcome-wrapper">
+                    <h1>Welcome</h1>
+                    <div className="welcome-container">
+                        <button onClick={this.onClick.bind(this)}>continue</button>
+                        <button onClick={() => this.setState({pswd: 1})}>more</button>
+                    </div>
+
+                    {this.state.pswd ?
+                        <span>
                         <input type="text"
                                value={this.state.text}
                                onChange={(e) => this.setState({text: e.target.value})}/>
                         <button onClick={this.onClick.bind(this)}>ok</button>
                     </span>
-                : null}
+                        : null}
+                </div>
             </div>
         )
     }
