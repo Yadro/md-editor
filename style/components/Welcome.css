@@ -1,26 +1,38 @@
-.Welcome {
-    width: 500px;
-    height: 100%;
-    margin: 0 auto;
+@font-face {
+    font-family: Roboto; /* Имя шрифта */
+    src: url(../fonts/Roboto-Thin.ttf); /* Путь к файлу со шрифтом */
 }
 
-.welcome-wrapper {
-    width: inherit;
-    height: 900px;
-    display: table-cell;
-    vertical-align: middle;
+.Welcome {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 250px;
+    height: 250px;
 }
 
 .Welcome h1 {
     font-size: 40pt;
     text-align: center;
-    /*margin-top: 200px;*/
+    font-weight: lighter;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+
+    /*transition-property: color;
+    transition-duration: 2s;
+    color: white;*/
 }
+/*.Welcome h1:hover {
+    color: black;
+}*/
 
 .Welcome .welcome-container button {
     display: block;
     width: 150px;
-    margin: 20px auto 0;
+    margin: 5px auto 0;
 }
 
 
