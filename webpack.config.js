@@ -12,7 +12,7 @@ module.exports = {
       'react',
       'react-dom',
       'moment',
-      'simplemde',
+      //'simplemde',
       'react-tagsinput',
       'draft-js',
       'draft-js-import-markdown',
@@ -33,7 +33,10 @@ module.exports = {
         exclude: [/node_modules/]
       }, {
         test: /\.css$/,
-        loader: 'style!css',
+        loader: 'style!css!autoprefixer?browsers=last 2 versions'
+      }, {
+        test: /\.(png|jpg|svg|eot|ttf|woff|woff2)$/,
+        loader: 'file?name=[path]/[name].[ext]',
       }
     ]
   },
