@@ -183,7 +183,7 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
         const currentNote = state.currentNote;
         const noteInstance = state.noteInstance;
         return (
-            <div className={state.privateMode ? 'grey-bg' : ''}>
+            <div className={'App' + (state.privateMode ? ' grey-bg' : '')}>
                 <NoteList
                     notes={state.notes}
                     currentNote={currentNote}
@@ -197,9 +197,11 @@ class App extends React.Component<SimpleRouterInjProps, AppS> {
                     currentNote={currentNote}
                     selectNote={this.selectNote}
                 />
-                <button onClick={this.props.go.bind(this, 'Settings', {})}>settings</button>
-                <span>Create: {moment(noteInstance.createTime).format('DD.MM HH:mm:ss')} </span>
-                <span>Last edit: {moment(noteInstance.editTime).format('DD.MM HH:mm:ss')}</span>
+                <footer>
+                    <button onClick={this.props.go.bind(this, 'Settings', {})}>settings</button>
+                    <span>Create: {moment(noteInstance.createTime).format('DD.MM HH:mm:ss')} </span>
+                    <span>Last edit: {moment(noteInstance.editTime).format('DD.MM HH:mm:ss')}</span>
+                </footer>
             </div>
         )
     }

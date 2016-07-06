@@ -1,3 +1,10 @@
+
+.WrapEditor {
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+}
+
 .RichEditor-root {
     background: #fff;
     font-family: 'Georgia', serif;

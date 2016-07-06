@@ -190,7 +190,7 @@ export default class WrapEditor extends React.Component<WrapEditoP, WrapEditorS>
         }
 
         return (
-            <div>
+            <div className="WrapEditor">
                 <div className="RichEditor-root">
                     <BlockStyleControls
                         editorState={editorState}
