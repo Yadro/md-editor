@@ -5,6 +5,7 @@ import {SimpleRouterInjProps} from "../lib/SimpleRouter";
 import {consoleWarn} from "../helper/Tools";
 import {config} from "../Config";
 import {storage, SortNotes} from "../helper/Storage";
+import FileLoader from "./FileLoader";
 
 const ThemeType = {
     light: 'light',
@@ -109,6 +110,8 @@ export default class Settings extends React.Component<SelectNotesP, SelectNotesS
                     <input type="checkbox" onChange={this.onClickCheckbox} value={this.state.checkbox}/>
                 </div>
                 <button onClick={() => this.props.go('Help')}>Help</button>
+                <hr/>
+                <FileLoader />
             </div>
         )
     }
